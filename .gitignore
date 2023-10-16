@@ -1,0 +1,17 @@
+.*.sh*
+server/*/.env
+server/.env
+server/*/*/.env
+server/node_modules
+server/test
+client/node_modules
+server/dist
+client/js
+watchit.json
+push
+client/.env
+client/*/.env
+*.save*
+*.png
+*.jpg
+.env

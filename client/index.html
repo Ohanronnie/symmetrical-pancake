@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en" class="h-full">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      body {
+        height: 100%;
+      }
+      .loader {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        overflow: hidden;
+      }
+
+      .loader svg {
+        animation: rotate 2s linear infinite;
+        position: relative;
+      }
+
+      .loader circle {
+        stroke-dasharray: 1, 200;
+        stroke-dashoffset: 0;
+        animation:
+          dash 1.5s ease-in-out infinite,
+          color 6s ease-in-out infinite;
+        stroke-linecap: round;
+      }
+
+      @keyframes rotate {
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      @keyframes dash {
+        0% {
+          stroke-dasharray: 1, 200;
+          stroke-dashoffset: 0;
+        }
+
+        50% {
+          stroke-dasharray: 90, 200;
+          stroke-dashoffset: -35;
+        }
+
+        100% {
+          stroke-dasharray: 90, 200;
+          stroke-dashoffset: -124;
+        }
+      }
+
+      @keyframes color {
+        100%,
+        0% {
+          stroke: #0073e6;
+        }
+
+        40% {
+          stroke: #0073e6;
+        }
+
+        66% {
+          stroke: #3498db;
+        }
+
+        80%,
+        90% {
+          stroke: #3498db;
+        }
+      }
+    </style>
+    <title>Vite + React</title>
+
+    <script src="./eruda.js"></script>
+    <script defer>
+      eruda.init();
+      /* if (window.location.port != 5173)
+        window["location"]["href"] = "http://localhost:5173/edit/profile";*/
+    </script>
+    <script defer>
+      class NProgress {
+        static start(t) {}
+        static done() {
+          try {
+            document.querySelectorAll(".anim-load").classList.remove("loader");
+          } catch (err) {
+            console.log(err);
+          }
+        }
+      }
+    </script>
+  </head>
+
+  <body class="bg-gray-900">
+    <div class="bg-gray-900" id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

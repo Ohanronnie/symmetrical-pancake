@@ -1,0 +1,178 @@
+import { axios } from "../utils/axios.js";
+import {
+  ArrowLeftIcon,
+  LinkIcon,
+  CalendarDaysIcon,
+} from "@heroicons/react/24/outline";
+import Post from "../components/Post";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { Loading } from "../components/Loading";
+export default function Profile() {
+  const [posts, setPosts] = useState(null);
+  const [comments, setComments] = useState(null);
+  const [personalInfo, setPersonalInfo] = useState(null);
+  const [page, setPage] = useState("post");
+  const { id } = useParams();
+  useEffect(function () {
+    axios.get(`/profile/${id}`).then(({ data }) => {
+      setPosts(data.posts);
+      setPersonalInfo(data);
+      console.log(data.comments);
+      setComments(data.comments);
+    });
+  }, []);
+  const postProps = (curr) => ({
+    name: curr.fullname,
+    username: curr.username,
+    content: curr.content,
+    likes: curr.likes,
+    comments: curr.comments,
+    seen: curr.seen,
+    avatar: curr.avatar,
+    url: curr.url,
+    postId: curr.postId,
+  });
+
+  function Posts() {
+    return posts.map((curr) => (
+      <Post key={Math.random()} {...postProps(curr)} />
+    ));
+  }
+  function Comments() {
+    return comments.map((data) => {
+      return (
+        <div className="flex px-2 py-2 border-b-[1px] border-t-[1px] border-solid border-gray-700">
+          <img
+            className="h-12 w-12 rounded-full mr-2"
+            src={data.avatar}
+            alt=""
+          />
+          <div className="w-full">
+            <div className="w-full flex justify-between">
+              <div className="join join-vertical">
+                <span className="text-gray-400 font-bold text-md join-item">
+                  {data.fullname}
+                </span>
+                <span className="join-item text-md text-gray-400">
+                  @{data.username}
+                </span>
+              </div>
+              <button className="text-gray-400"></button>
+            </div>
+            <div className="mt-2">
+              <p className="text-slate-300">{data.content}</p>
+            </div>
+          </div>
+        </div>
+      );
+    });
+  }
+  return (
+    <>
+      {personalInfo ? (
+        <>
+          <nav className="flex py-1 sticky top-0 z-10 bg-gray-900 border-b-[1px] border-solid border-gray-700">
+            <button className="text-white font-bold pl-2 pr-8">
+              <ArrowLeftIcon className="h-4 w-10" />
+            </button>
+            <div className="join join-vertical">
+              <h4 className="join-item text-white font-bold text-lg">
+                {personalInfo && personalInfo.fullname}
+              </h4>
+              <h5 className="join-item text-slate-500">
+                {personalInfo && personalInfo.posts.length} posts
+              </h5>
+            </div>
+          </nav>
+
+          <section className="pb-6">
+            <div className="h-36 bg-gray-500 w-full border-none">
+              <div alt="" className="w-full h-36 border-none"></div>
+            </div>
+            <div className="mx-4">
+              <div className="flex justify-between">
+                <img
+                  src={personalInfo.avatar}
+                  alt=""
+                  className="h-20 w-20 rounded-full border-2 border-solid border-gray-900 -mt-10 "
+                />
+                <button className="text-white text-sm border-[1.5px] border-solid rounded-2xl font-medium px-6 mt-4 h-8 border-gray-700">
+                  {" "}
+                  Edit Profile{" "}
+                </button>
+              </div>
+              <div className="join join-vertical ml-2">
+                <h4 className="join-item text-white font-bold text-lg">
+                  {personalInfo.fullname}
+                </h4>
+                <h5 className="join-item text-slate-500">@ohanronnie</h5>
+              </div>
+              <div className="font-normal mt-4 ml-2 text-lg text-white">
+                <h5>{personalInfo.bio}</h5>
+              </div>
+              <div className="ml-2 mt-2">
+                <h5 className="text-blue-700 flex items-center">
+                  <LinkIcon className="text-gray-700 h-4 w-4 mr-1" />{" "}
+                  {personalInfo.url}
+                </h5>
+                <h5 className="text-gray-700 flex items-center">
+                  <CalendarDaysIcon className="text-gray-600 h-4 w-4 mr-1" />{" "}
+                  {new Date(personalInfo.createdAt).toLocaleDateString(
+                    "en-GB",
+                    { year: "numeric", month: "long", day: "numeric" },
+                  )}
+                </h5>
+              </div>
+              <div className="flex mt-2 ml-2">
+                <h5 className="text-md font-normal text-gray-600">
+                  <span className="text-white mr-1">
+                    {personalInfo.following}
+                  </span>
+                  Following{" "}
+                </h5>
+                <h5 className="text-md font-normal text-gray-600 ml-6">
+                  <span className="text-white mr-1">
+                    {personalInfo.followers}
+                  </span>
+                  Followers{" "}
+                </h5>
+              </div>
+              <div className="w-full mt-6 font-medium text-gray-500 flex justify-between text-lg ml-2 px-4">
+                <span
+                  onClick={() => setPage("post")}
+                  className={
+                    page === "post" &&
+                    `text-white border-b-2 border-solid border-[#008fff]`
+                  }
+                >
+                  Posts
+                </span>
+                <span
+                  onClick={() => setPage("comment")}
+                  className={
+                    page === "comment" &&
+                    `text-white border-b-2 border-solid border-[#008fff]`
+                  }
+                >
+                  Comments
+                </span>
+                <span onClick={() => setPage("likes")} className="">
+                  Likes
+                </span>
+              </div>
+              <div className="mb-4">
+                {page === "comment" ? <Comments /> : page === "post" && Posts()}
+              </div>
+            </div>
+          </section>
+        </>
+      ) : (
+        <Loading
+          svg={{ className: "h-10 w-10" }}
+          div={"h-[100%] flex justify-center items-center"}
+        />
+      )}
+    </>
+  );
+}
