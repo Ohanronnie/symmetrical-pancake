@@ -15,3 +15,5 @@ client/*/.env
 *.png
 *.jpg
 .env
+log*
+*log*
