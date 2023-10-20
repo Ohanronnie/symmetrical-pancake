@@ -8,10 +8,7 @@ async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {
     cors: {
       origin: (url, callback) => {
-        if (
-          url || !url
-        )
-          return callback(null, url);
+        if (url || !url) return callback(null, url);
         return new Error("CORS not enabled");
       },
       methods: ["GET", "POST", "DELETE"],
@@ -20,6 +17,6 @@ async function bootstrap() {
   });
   app.useGlobalPipes(new ValidationPipe());
   app.use(cookieParser());
-  await app.listen(3000);
+  await app.listen(process.env.PORT || 3000);
 }
 bootstrap();
