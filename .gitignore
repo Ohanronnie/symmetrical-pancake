@@ -12,8 +12,6 @@ push
 client/.env
 client/*/.env
 *.save*
-*.png
-*.jpg
 .env
 log*
 *log*
