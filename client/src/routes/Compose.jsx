@@ -45,7 +45,10 @@ export default function Compose() {
   return (
     <>
       <nav className="flex py-2 sticky top-0 z-10 bg-gray-900 border-b-[1px] border-solid border-gray-700">
-        <button className="text-white font-bold pl-2 pr-8">
+        <button
+          onClick={navigate.bind(null, -1)}
+          className="text-white font-bold pl-2 pr-8"
+        >
           <ArrowLeftIcon className="h-4 w-10" />
         </button>
         <div className="">

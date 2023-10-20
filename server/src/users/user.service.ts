@@ -294,23 +294,21 @@ export class UserService {
         followers,
       });
       await this.followerRepository.save(done);
+    } else {
+      const __user = await this.followerRepository.findOne({
+        where: {
+          following: {
+            id: following.id,
+          },
+          followers: {
+            id: followers.id,
+          },
+        },
+        loadRelationIds: true,
+      });
+      await this.followerRepository.delete(__user.id);
     }
-    return await this.userRepository.findOne({
-      where: {
-        id: followerId,
-      },
-      relations: [
-        "followers",
-        "following",
-        "followers.followers",
-        "following.following",
-        "following.followers",
-        "followers.followers",
-        "likes",
-        "comments",
-        "posts",
-      ],
-    });
+    return true;
   }
   async getFriendsSuggestion() {}
   async getUserDetailsById(userId: number, myId: number) {
@@ -331,7 +329,7 @@ export class UserService {
         "followers.followers",
         "following.following",
         "following.followers",
-        "followers.followers",
+        "followers.following",
         "comments",
         "comments.post.likes",
         "comments.post.comments",
@@ -341,8 +339,11 @@ export class UserService {
         "comments.post.seen",
       ],
     });
+    let _iFollow = _user.followers.find((e) => e.following.id == myId);
+
     const user = {
       fullname: _user.fullname,
+      username: _user.username,
       avatar: _user.avatar,
       cover: _user.avatar,
       followers: _user.followers.length,
@@ -354,9 +355,8 @@ export class UserService {
       posts: _user.posts.map((post) => this.formatPost(post, myId)),
       createdAt: _user.createdAt,
       isMe: _user.id === myId,
-      iFollow:
-        _user.following.filter((curr) => curr.followers.id === myId).length ===
-        0,
+      iFollow: !!_iFollow,
+      can_edit: _user.id === myId,
     };
     return user;
   }

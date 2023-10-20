@@ -8,20 +8,24 @@ import Post from "../components/Post";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Loading } from "../components/Loading";
+import { Link, useNavigate } from "react-router-dom";
 export default function Profile() {
   const [posts, setPosts] = useState(null);
   const [comments, setComments] = useState(null);
   const [personalInfo, setPersonalInfo] = useState(null);
   const [page, setPage] = useState("post");
   const { id } = useParams();
+  const navigate = useNavigate();
   useEffect(function () {
     axios.get(`/profile/${id}`).then(({ data }) => {
       setPosts(data.posts);
       setPersonalInfo(data);
-      console.log(data.comments);
       setComments(data.comments);
     });
   }, []);
+  const back = () => {
+    navigate(-1);
+  };
   const postProps = (curr) => ({
     name: curr.fullname,
     username: curr.username,
@@ -33,7 +37,9 @@ export default function Profile() {
     url: curr.url,
     postId: curr.postId,
   });
-
+  function Follow() {
+    axios.post("/follow/" + id);
+  }
   function Posts() {
     return posts.map((curr) => (
       <Post key={Math.random()} {...postProps(curr)} />
@@ -42,7 +48,10 @@ export default function Profile() {
   function Comments() {
     return comments.map((data) => {
       return (
-        <div className="flex px-2 py-2 border-b-[1px] border-t-[1px] border-solid border-gray-700">
+        <div
+          key={Math.random()}
+          className="flex px-2 py-2 border-b-[1px] border-t-[1px] border-solid border-gray-700"
+        >
           <img
             className="h-12 w-12 rounded-full mr-2"
             src={data.avatar}
@@ -73,7 +82,7 @@ export default function Profile() {
       {personalInfo ? (
         <>
           <nav className="flex py-1 sticky top-0 z-10 bg-gray-900 border-b-[1px] border-solid border-gray-700">
-            <button className="text-white font-bold pl-2 pr-8">
+            <button onClick={back} className="text-white font-bold pl-2 pr-8">
               <ArrowLeftIcon className="h-4 w-10" />
             </button>
             <div className="join join-vertical">
@@ -97,25 +106,42 @@ export default function Profile() {
                   alt=""
                   className="h-20 w-20 rounded-full border-2 border-solid border-gray-900 -mt-10 "
                 />
-                <button className="text-white text-sm border-[1.5px] border-solid rounded-2xl font-medium px-6 mt-4 h-8 border-gray-700">
-                  {" "}
-                  Edit Profile{" "}
-                </button>
+                {personalInfo.can_edit ? (
+                  <button className="text-white text-sm border-[1.5px] border-solid rounded-2xl font-medium px-6 mt-4 h-8 border-gray-700">
+                    <Link to="/edit/profile">Edit Profile</Link>
+                  </button>
+                ) : !personalInfo.iFollow ? (
+                  <button
+                    onClick={Follow}
+                    className="text-white text-sm border-[1.5px] bg-[#008fff] border-solid rounded-2xl font-medium px-6 mt-4 h-8 border-gray-700"
+                  >
+                    Follow
+                  </button>
+                ) : (
+                  <button
+                    onClick={Follow}
+                    className="text-white text-sm border-[1.5px] border-solid rounded-2xl font-medium px-6 mt-4 h-8 border-gray-700"
+                  >
+                    Unfollow
+                  </button>
+                )}
               </div>
               <div className="join join-vertical ml-2">
                 <h4 className="join-item text-white font-bold text-lg">
                   {personalInfo.fullname}
                 </h4>
-                <h5 className="join-item text-slate-500">@ohanronnie</h5>
+                <h5 className="join-item text-slate-500">
+                  @{personalInfo.username}
+                </h5>
               </div>
               <div className="font-normal mt-4 ml-2 text-lg text-white">
                 <h5>{personalInfo.bio}</h5>
               </div>
               <div className="ml-2 mt-2">
-                <h5 className="text-blue-700 flex items-center">
+                {/*   <h5 className="text-blue-700 flex items-center">
                   <LinkIcon className="text-gray-700 h-4 w-4 mr-1" />{" "}
                   {personalInfo.url}
-                </h5>
+                </h5>*/}
                 <h5 className="text-gray-700 flex items-center">
                   <CalendarDaysIcon className="text-gray-600 h-4 w-4 mr-1" />{" "}
                   {new Date(personalInfo.createdAt).toLocaleDateString(
