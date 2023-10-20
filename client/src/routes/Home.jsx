@@ -28,6 +28,7 @@ export default function Home() {
     avatar: curr.avatar,
     url: curr.url,
     postId: curr.postId,
+    posterId: curr.posterId,
   });
   return (
     <div className="">

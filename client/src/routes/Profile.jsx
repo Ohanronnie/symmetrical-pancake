@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Loading } from "../components/Loading";
 import { Link, useNavigate } from "react-router-dom";
+import Footer from "../components/Footer";
 export default function Profile() {
   const [posts, setPosts] = useState(null);
   const [comments, setComments] = useState(null);
@@ -26,6 +27,7 @@ export default function Profile() {
   const back = () => {
     navigate(-1);
   };
+
   const postProps = (curr) => ({
     name: curr.fullname,
     username: curr.username,
@@ -39,6 +41,11 @@ export default function Profile() {
   });
   function Follow() {
     axios.post("/follow/" + id);
+    setPersonalInfo((all) => ({
+      ...all,
+      iFollow: !all.iFollow,
+      followers: all.iFollow ? all.followers - 1 : all.followers + 1,
+    }));
   }
   function Posts() {
     return posts.map((curr) => (
@@ -183,9 +190,9 @@ export default function Profile() {
                 >
                   Comments
                 </span>
-                <span onClick={() => setPage("likes")} className="">
+                {/*               <span onClick={() => setPage("likes")} className="">
                   Likes
-                </span>
+                </span>*/}
               </div>
               <div className="mb-4">
                 {page === "comment" ? <Comments /> : page === "post" && Posts()}
@@ -196,9 +203,10 @@ export default function Profile() {
       ) : (
         <Loading
           svg={{ className: "h-10 w-10" }}
-          div={"h-[100%] flex justify-center items-center"}
+          div={"h-[100vh] flex justify-center items-center"}
         />
       )}
+      <Footer />
     </>
   );
 }

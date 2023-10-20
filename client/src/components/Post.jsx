@@ -14,6 +14,7 @@ import { Loading, useLoading } from "./Loading.jsx";
 import { useState, useEffect, useRef } from "react";
 import { Cookie } from "../utils/cookie.js";
 import { axios } from "../utils/axios.js";
+import { useNavigate } from "react-router-dom";
 export const css = {
   position: "fixed",
   top: 0,
@@ -196,6 +197,7 @@ export default function Post({
   seen,
   url,
   postId,
+  posterId,
 }) {
   const [opened, setOpened] = useState(false);
   const [enlarged, setEnlarged] = useState(false);
@@ -203,6 +205,7 @@ export default function Post({
   const [likesArr, setLikesArr] = useState(null);
   const elem = useRef(null);
   const seenRef = useRef(null);
+  const navigate = useNavigate();
   const action = () => {
     setOpened(false);
   };
@@ -276,7 +279,10 @@ export default function Post({
         <img className="h-12 w-12 rounded-full mr-2" src={avatar} alt="" />
         <div className="w-full">
           <div className="w-full flex justify-between">
-            <div className="join join-vertical">
+            <div
+              className="join join-vertical"
+              onClick={posterId && navigate.bind(null, `/profile/${posterId}`)}
+            >
               <span className="text-gray-400 font-bold text-md join-item">
                 {name}
               </span>

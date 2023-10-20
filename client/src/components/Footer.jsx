@@ -11,14 +11,20 @@ export default function Footer() {
       }
     };
   };
+  const isActive = (path) => window.location.pathname === path;
   return (
     <div className="btm-nav bottom-0 z-10  border-t-[1px] border-gray-800 border-solid bg-opacity-50 backdrop-filter backdrop-blur">
-      <button onClick={goTo("/home")} className="text-white bg-gray-900">
+      <button
+        onClick={goTo("/home")}
+        className={`${isActive("/home") && "active"} text-white bg-gray-900`}
+      >
         <HomeIcon className="h-5 w-5" />
       </button>
       <button
         onClick={goTo("/profile/" + Cookie.get("c_user"))}
-        className="text-white bg-gray-900"
+        className={`${
+          isActive("/profile/" + Cookie.get("c_user")) && "active"
+        } text-white bg-gray-900`}
       >
         <UserCircleIcon className="h-5 w-5" />
       </button>
