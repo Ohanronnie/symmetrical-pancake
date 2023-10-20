@@ -13,7 +13,7 @@ import { ICreateUser } from "../users/interfaces/user.interface";
 import { CreateUserDto } from "../users/dtos/user.dto";
 import { AuthService } from "./auth.service";
 import { ProtectGuard } from "./protect.guard";
-import { AuthGuard } from "@nestjs/passport";
+import { JwtAuthGuard } from "./auth.guard";
 @Controller("/")
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
@@ -25,7 +25,7 @@ export class AuthController {
   }
 
   @Post("auth")
-  @UseGuards(ProtectGuard)
+  @UseGuards(ProtectGuard, JwtAuthGuard)
   async Auth() {
     return {};
   }

@@ -34,7 +34,7 @@ export default function Register() {
         break;
 
       case "fullname":
-        if (!/^[a-zA-Z ]/.test(value))
+        if (/[^a-zA-Z ]/.test(value))
           setErrors((e) => ({
             ...e,
             [name]: "Fullname cannot contain special characters",

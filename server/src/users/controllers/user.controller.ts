@@ -21,6 +21,8 @@ import { AuthGuard } from "@nestjs/passport";
 import { UserService } from "../user.service";
 import { User, IUser } from "../user.decorator";
 import { CreatePostDto } from "../dtos/post.dto";
+import { UpdateUserDto } from "../dtos/user.dto";
+
 import { join } from "path";
 import { createReadStream } from "fs";
 import { multerOptions } from "../utils/multer";
@@ -131,7 +133,21 @@ export class UserController {
       path: `http://localhost:3000/file/${file.filename}`,
     };
   }
-
+  @Get("personal/profile/details")
+  @UseGuards(JwtAuthGuard)
+  getPersonalDetails(@User() user: IUser) {
+    return this.userService.getProfileDetails(user.id);
+  }
+  @Post("personal/profile/update")
+  @UseGuards(JwtAuthGuard)
+  updateProfile(@User() user: IUser, @Body() body: UpdateUserDto) {
+    return this.userService.updateProfile(body, user.id);
+  }
+  @Get("username/exist/:username")
+  @UseGuards(JwtAuthGuard)
+  checkUsername(@User() user: IUser, @Param("username") username: string) {
+    return this.userService.checkUsername(user.id, username);
+  }
   @Get("file/:name")
   getFile(@Param("name") name: string) {
     console.log(name);

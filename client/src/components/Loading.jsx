@@ -50,7 +50,7 @@ export function useLoading() {
         }
         if (!isLoading) {
           window.removeEventListener("popstate", handlePopState);
-          history.back();
+          //history.back();
         }
       }
       return () => {

@@ -1,6 +1,6 @@
 import _axios from "axios";
 export const axios = _axios.create({
-  baseURL: "https://famous-hoops-hunt.loca.lt" || "http://localhost:3000",
+  baseURL: "http://localhost:3000",
   withCredentials: true,
   timeout: 1000 * 60 * 60 * 24,
 });

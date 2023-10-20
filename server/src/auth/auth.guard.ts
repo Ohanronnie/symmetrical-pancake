@@ -12,7 +12,7 @@ import { ProtectGuard } from "./protect.guard";
 @Injectable()
 export class JwtAuthGuard implements CanActivate {
   constructor(
-    // private readonly authService: AuthService,
+    private readonly authService: AuthService,
     private readonly jwtService: JwtService,
   ) {}
   canActivate(ctx: ExecutionContext) {

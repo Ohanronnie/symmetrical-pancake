@@ -11,7 +11,7 @@ import { Like } from "./entities/like.entity";
 import { Follower } from "./entities/followers.entity";
 import { Comment } from "./entities/comment.entity";
 import { Seen } from "./entities/seen.entity";
-import { ICreateUser } from "./interfaces/user.interface";
+import { ICreateUser, IUpdateUser } from "./interfaces/user.interface";
 import { IPost } from "./interfaces/post.interface";
 import * as bcrypt from "bcryptjs";
 import { JwtService } from "@nestjs/jwt";
@@ -341,7 +341,6 @@ export class UserService {
         "comments.post.seen",
       ],
     });
-    console.log(_user);
     const user = {
       fullname: _user.fullname,
       avatar: _user.avatar,
@@ -360,5 +359,34 @@ export class UserService {
         0,
     };
     return user;
+  }
+  async getProfileDetails(id: number) {
+    const user = await this.userRepository.findOneBy({ id });
+    return {
+      username: user.username,
+      fullname: user.fullname,
+      avatar: user.avatar,
+    };
+  }
+  async checkUsername(id: number, username: string) {
+    const user = await this.userRepository.findOneBy({ username });
+    if (user) {
+      if (user.id == id) {
+        return false;
+      } else {
+        return true;
+      }
+    } else {
+      return false;
+    }
+  }
+
+  async updateProfile(details: IUpdateUser, id: number) {
+    const user = await this.userRepository.findOneBy({ id });
+    user.fullname = details.fullname;
+    user.username = details.username;
+    user.avatar = details.avatar;
+    await this.userRepository.save(user);
+    return true;
   }
 }

@@ -9,8 +9,8 @@ import { Like } from "./users/entities/like.entity";
 import { Seen } from "./users/entities/seen.entity";
 import { Follower } from "./users/entities/followers.entity";
 import { Session } from "./users/entities/session.entity";
-import { ConfigModule } from "@nestjs/config";
-
+import { ConfigModule, ConfigService } from "@nestjs/config";
+import { JwtModule } from "@nestjs/jwt";
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -29,6 +29,7 @@ import { ConfigModule } from "@nestjs/config";
     UserModule,
     AuthModule,
   ],
+
   controllers: [],
   providers: [],
 })

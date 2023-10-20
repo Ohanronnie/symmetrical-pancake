@@ -1,4 +1,4 @@
-import { Module, MiddlewareConsumer } from "@nestjs/common";
+import { Module, MiddlewareConsumer, forwardRef } from "@nestjs/common";
 import { UserController } from "./controllers/user.controller";
 import { UserService } from "./user.service";
 import { TypeOrmModule, InjectRepository } from "@nestjs/typeorm";
@@ -14,9 +14,10 @@ import { Seen } from "./entities/seen.entity";
 import * as session from "express-session";
 import { TypeormStore } from "connect-typeorm";
 import { Repository } from "typeorm";
-
+import { AuthModule } from "../auth/auth.module";
 @Module({
   imports: [
+    forwardRef(() => AuthModule),
     JwtModule.registerAsync({
       useFactory: (configService: ConfigService) => ({
         secret: configService.get("JWT_SECRET"),
@@ -26,6 +27,7 @@ import { Repository } from "typeorm";
       }),
       inject: [ConfigService],
     }),
+
     TypeOrmModule.forFeature([
       User,
       Post,

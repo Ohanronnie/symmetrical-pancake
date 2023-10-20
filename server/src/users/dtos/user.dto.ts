@@ -26,3 +26,13 @@ export class LoginUserDto {
   @IsNotEmpty()
   password: string;
 }
+export class UpdateUserDto {
+  @IsNotEmpty()
+  @MaxLength(28)
+  fullname: string;
+  @Validate(IsUsername)
+  @IsNotEmpty()
+  username: string;
+  @IsNotEmpty()
+  avatar: string;
+}

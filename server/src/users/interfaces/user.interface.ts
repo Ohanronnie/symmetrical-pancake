@@ -4,3 +4,8 @@ export interface ICreateUser {
   email: string;
   username: string;
 }
+export interface IUpdateUser {
+  fullname: string;
+  username: string;
+  avatar: string;
+}

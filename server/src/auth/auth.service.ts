@@ -1,9 +1,12 @@
-import { Injectable, HttpException } from "@nestjs/common";
+import { Injectable, HttpException, forwardRef, Inject } from "@nestjs/common";
 import { UserService } from "../users/user.service";
 import { ICreateUser } from "../users/interfaces/user.interface";
 @Injectable()
 export class AuthService {
-  constructor(private readonly userService: UserService) {}
+  constructor(
+    @Inject(forwardRef(() => UserService))
+    private readonly userService: UserService,
+  ) {}
   async validateUser(username: string, password: string) {
     return this.userService.login(username, password);
   }
