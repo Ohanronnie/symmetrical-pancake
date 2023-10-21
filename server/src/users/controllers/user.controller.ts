@@ -49,7 +49,7 @@ export class UserController {
       secure: true,
     });
     return {
-      id: user.id,
+      id: "user.id",
       jwt: this.userService.createJwt(user.email, user.id),
     };
   }
