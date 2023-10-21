@@ -46,6 +46,7 @@ export class UserController {
       path: "/",
       sameSite: "none",
       httpOnly: true,
+      secure: true,
     });
     return {};
   }

@@ -61,7 +61,7 @@ export class UserModule {
             maxAge: 60 * 60 * 24 * 365,
             sameSite: "none",
             httpOnly: true,
-            secure: false,
+            secure: true,
             path: "/",
           },
           store: new TypeormStore({
