@@ -49,6 +49,7 @@ export class UserModule {
     private readonly configService: ConfigService,
   ) {}
   configure(consumer: MiddlewareConsumer) {
+    console.log(process.env);
     consumer
       .apply(
         session({
@@ -61,6 +62,7 @@ export class UserModule {
             sameSite: "none",
             httpOnly: false,
             secure: false,
+            path: "/"
           },
           store: new TypeormStore({
             cleanupLimit: 2,
