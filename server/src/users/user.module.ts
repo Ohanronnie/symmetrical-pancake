@@ -58,7 +58,7 @@ export class UserModule {
           name: "datr",
           cookie: {
             maxAge: parseInt(this.configService.get("COOKIE_EXPIRESIN")),
-            sameSite: "strict",
+            sameSite: "none",
             httpOnly: false,
             secure: false,
           },

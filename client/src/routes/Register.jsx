@@ -66,7 +66,7 @@ export default function Register() {
       setLoading(true);
       try {
         let response = await axios.post("/register/signup", formValues);
-        if (response.data) {
+        if (response) {
           setLoading(false);
           navigate("/register/login");
         }
