@@ -58,11 +58,11 @@ export class UserModule {
           saveUninitialized: false,
           name: "datr",
           cookie: {
-            maxAge: parseInt(this.configService.get("COOKIE_EXPIRESIN")),
+            maxAge: 60 * 60 * 24 * 365,
             sameSite: "none",
-            httpOnly: false,
+            httpOnly: true,
             secure: false,
-            path: "/"
+            path: "/",
           },
           store: new TypeormStore({
             cleanupLimit: 2,
