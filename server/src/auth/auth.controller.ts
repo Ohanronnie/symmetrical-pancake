@@ -25,7 +25,7 @@ export class AuthController {
   }
 
   @Post("auth")
-  @UseGuards(ProtectGuard, JwtAuthGuard)
+  @UseGuards(JwtAuthGuard)
   async Auth() {
     return {};
   }
