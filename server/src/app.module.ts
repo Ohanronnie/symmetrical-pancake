@@ -16,15 +16,20 @@ import { JwtModule } from "@nestjs/jwt";
     ConfigModule.forRoot({
       isGlobal: true,
     }),
-    TypeOrmModule.forRoot({
-      type: "postgres",
-      host: "localhost",
-      port: 5432,
-      username: "root",
-      password: "root",
-      database: "sphere",
-      entities: [User, Post, Like, Comment, Follower, Session, Seen],
-      synchronize: true,
+    TypeOrmModule.forRootAsync({
+      useFactory: (configService: ConfigService) => {
+        return {
+          type: "postgres",
+          host: configService.get("DATABASE_HOST"),
+          port: configService.get("DATABASE_PORT"),
+          username: configService.get("DATABASE_USER"),
+          password: configService.get("DATABASE_PASSWORD"),
+          database: configService.get("DATABASE_NAME"),
+          entities: [User, Post, Like, Comment, Follower, Session, Seen],
+          synchronize: true,
+        };
+      },
+      inject: [ConfigService],
     }),
     UserModule,
     AuthModule,
