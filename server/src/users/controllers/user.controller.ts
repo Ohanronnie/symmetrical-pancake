@@ -32,7 +32,7 @@ import { ProtectGuard } from "../../auth/protect.guard";
 export class UserController {
   constructor(private readonly userService: UserService) {}
   @Post("register/login")
-  @UseGuards(ProtectGuard, AuthGuard("local"))
+  @UseGuards( AuthGuard("local"))
   async loginUser(
     @Req() req: Request,
     @Res({ passthrough: true }) res: Response,
@@ -77,19 +77,19 @@ export class UserController {
     return this.userService.getPostById(query.id, user.id);
   }
   @Post("post/like/:postId")
-  @UseGuards(ProtectGuard, JwtAuthGuard)
+  @UseGuards( JwtAuthGuard)
   async handleLike(@User() user: IUser, @Param("postId") postId: number) {
     const like = await this.userService.handleLikes(postId, user.id);
     return {};
   }
   @Post("post/seen/:postId")
-  @UseGuards(ProtectGuard, JwtAuthGuard)
+  @UseGuards( JwtAuthGuard)
   async handleSeen(@User() user: IUser, @Param("postId") postId: number) {
     const seen = await this.userService.handleSeen(postId, user.id);
     return {};
   }
   @Post("post/comment/:postId")
-  @UseGuards(JwtAuthGuard, ProtectGuard)
+  @UseGuards(JwtAuthGuard)
   async handleComment(
     @User() user: IUser,
     @Body() body: any,
@@ -111,12 +111,12 @@ export class UserController {
     return post;
   }
   @Post("follow/:id")
-  @UseGuards(ProtectGuard, JwtAuthGuard)
+  @UseGuards( JwtAuthGuard)
   async follow(@User() user: IUser, @Param("id") id: number) {
     return await this.userService.follow(user.id, id);
   }
   @Get("/profile/:id")
-  @UseGuards(ProtectGuard, JwtAuthGuard)
+  @UseGuards( JwtAuthGuard)
   async getPostByProfileId(@Param("id") id: number, @User() user: IUser) {
     console.log(id);
     return this.userService.getUserDetailsById(id, user.id);
