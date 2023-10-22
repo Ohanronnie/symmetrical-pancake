@@ -30,7 +30,10 @@ export class User {
   followers: Follower[];
   @OneToMany((type) => Follower, (follow) => follow.following)
   following: Follower[];
-  @Column({ type: "text", default: "http://localhost:3000/file/dummy.jpg" })
+  @Column({
+    type: "text",
+    default: `${process.env.BACKEND_URL}/file/dummy.jpg`,
+  })
   avatar: string;
   @CreateDateColumn({
     name: "createdAt",

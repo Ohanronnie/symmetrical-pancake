@@ -81,24 +81,26 @@ export default function App() {
     <>
       <BrowserRouter>
         <Routes>
-          <Route path="/">
-            <Route path="home" element={<ProtectedRoute />}>
-              <Route path="" element={<Home />} />
-            </Route>
-            <Route path="register">
-              <Route path="signup" element={<Register />} />
-              <Route path="login" element={<Login />} />
-            </Route>
-            <Route path="profile/:id" element={<ProtectedRoute />}>
-              <Route path="" element={<Profile />} />
-            </Route>
-            <Route path="compose" element={<ProtectedRoute />}>
-              <Route path="" element={<Compose />} />
-            </Route>
-            <Route path="edit/profile" element={<ProtectedRoute />}>
-              <Route path="" element={<EditProfile />} />
-            </Route>
+          <Route path="/" element={<ProtectedRoute />}>
+            <Route path="" element={<Home />} />
           </Route>
+          <Route path="/home" element={<ProtectedRoute />}>
+            <Route path="" element={<Home />} />
+          </Route>
+          <Route path="/register">
+            <Route path="signup" element={<Register />} />
+            <Route path="login" element={<Login />} />
+          </Route>
+          <Route path="/profile/:id" element={<ProtectedRoute />}>
+            <Route path="" element={<Profile />} />
+          </Route>
+          <Route path="/compose" element={<ProtectedRoute />}>
+            <Route path="" element={<Compose />} />
+          </Route>
+          <Route path="/edit/profile" element={<ProtectedRoute />}>
+            <Route path="" element={<EditProfile />} />
+          </Route>
+
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

@@ -134,7 +134,7 @@ export class UserController {
   ) {
     console.log(req);
     return {
-      path: `http://localhost:3000/file/${file.filename}`,
+      path: `${process.env.BACKEND_URL}/file/${file.filename}`,
     };
   }
   @Get("personal/profile/details")
@@ -154,7 +154,6 @@ export class UserController {
   }
   @Get("file/:name")
   getFile(@Param("name") name: string) {
-    console.log(name);
     return new StreamableFile(createReadStream(join("assets", name)));
   }
 }
