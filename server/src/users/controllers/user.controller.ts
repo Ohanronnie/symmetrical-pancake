@@ -45,7 +45,7 @@ export class UserController {
       maxAge: date.setFullYear(date.getFullYear() + 1),
       path: "/",
       sameSite: "none",
-      httpOnly: true,
+      httpOnly: false,
       secure: true,
     });
     return {
