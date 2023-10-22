@@ -55,7 +55,7 @@ export class UserModule {
         session({
           secret: this.configService.get("SESSION_SECRET"),
           resave: false,
-          saveUninitialized: false,
+          saveUninitialized: true,
           name: "datr",
           cookie: {
             maxAge: 60 * 60 * 24 * 365,
