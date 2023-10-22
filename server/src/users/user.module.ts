@@ -48,7 +48,7 @@ export class UserModule {
     private readonly sessionRepository: Repository<Session>,
     private readonly configService: ConfigService,
   ) {}
-  configure(consumer: MiddlewareConsumer) {
+  /*configure(consumer: MiddlewareConsumer) {
     console.log(process.env);
     consumer
       .apply(
@@ -62,15 +62,15 @@ export class UserModule {
             sameSite: "none",
             httpOnly: true,
             secure: true,
-            path: "/",
+            path: "/"
           },
-          /* store: new TypeormStore({
+          store: new TypeormStore({
             cleanupLimit: 2,
             limitSubquery: true,
             ttl: 86400,
-          }).connect(this.sessionRepository),*/
+          }).connect(this.sessionRepository),
         }),
       )
       .forRoutes("*");
-  }
+  }*/
 }

@@ -22,7 +22,7 @@ async function bootstrap() {
     session({
       secret: "JUSTIMAGINEXANDY",
       resave: false,
-      saveUninitialized: false,
+      saveUninitialized: true,
       name: "datr",
       cookie: {
         maxAge: 60 * 60 * 24 * 365,
