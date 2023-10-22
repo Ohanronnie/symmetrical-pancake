@@ -21,7 +21,7 @@ async function bootstrap() {
   app.use(
     session({
       secret: "JUSTIMAGINEXANDY",
-      resave: false,
+      resave: true,
       saveUninitialized: true,
       name: "datr",
       cookie: {
