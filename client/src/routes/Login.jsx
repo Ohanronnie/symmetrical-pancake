@@ -37,6 +37,7 @@ export default function Login() {
       });
       setLoading(false);
       setErrors(null);
+      localStorage.setItem("token", user.data.jwt);
       navigate("/home");
     } catch (err) {
       console.log(err);
