@@ -18,8 +18,8 @@ async function bootstrap() {
   });
   app.useGlobalPipes(new ValidationPipe());
   app.use(cookieParser());
-  app.use(
-    session({
+  app.set("trust proxy", 1);
+  /*app.use(session({
       secret: "JUSTIMAGINEXANDY",
       resave: true,
       saveUninitialized: true,
@@ -29,15 +29,14 @@ async function bootstrap() {
         sameSite: "none",
         httpOnly: true,
         secure: true,
-        path: "/",
+        path: "/"
       },
-      /* store: new TypeormStore({
+      store: new TypeormStore({
          cleanupLimit: 2,
          limitSubquery: true,
          ttl: 86400,
-       }).connect(this.sessionRepository),*/
-    }),
-  );
+       }).connect(this.sessionRepository),
+    }))*/
   await app.listen(process.env.PORT || 3000);
 }
 bootstrap();

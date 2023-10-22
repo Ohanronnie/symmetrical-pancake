@@ -48,7 +48,7 @@ export class UserModule {
     private readonly sessionRepository: Repository<Session>,
     private readonly configService: ConfigService,
   ) {}
-  /*configure(consumer: MiddlewareConsumer) {
+  configure(consumer: MiddlewareConsumer) {
     console.log(process.env);
     consumer
       .apply(
@@ -57,12 +57,13 @@ export class UserModule {
           resave: false,
           saveUninitialized: true,
           name: "datr",
+          proxy: true,
           cookie: {
             maxAge: 60 * 60 * 24 * 365,
             sameSite: "none",
             httpOnly: true,
             secure: true,
-            path: "/"
+            path: "/",
           },
           store: new TypeormStore({
             cleanupLimit: 2,
@@ -72,5 +73,5 @@ export class UserModule {
         }),
       )
       .forRoutes("*");
-  }*/
+  }
 }
