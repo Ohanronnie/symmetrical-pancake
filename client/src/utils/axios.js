@@ -11,10 +11,7 @@ axios.interceptors.request.use(
       app_associate: window.app_associate,
       req_id: window.req_id,
     };
-    config.headers = {
-      ...config.headers,
-      token: localStorage.getItem("token"),
-    };
+
     if (config.method === "post") {
       if (config.data instanceof FormData) {
         for (let key in tokens) {

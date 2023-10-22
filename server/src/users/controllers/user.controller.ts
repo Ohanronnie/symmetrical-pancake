@@ -48,10 +48,7 @@ export class UserController {
       httpOnly: false,
       secure: true,
     });
-    return {
-      id: "user.id",
-      jwt: this.userService.createJwt(user.email, user.id),
-    };
+    return {};
   }
 
   @Post("post")
