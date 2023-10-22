@@ -48,7 +48,7 @@ export class UserController {
       httpOnly: false,
       secure: true,
     });
-    return {};
+    return { id: user.id };
   }
 
   @Post("post")

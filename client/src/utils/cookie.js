@@ -8,6 +8,6 @@ export const Cookie = {
         break;
       }
     }
-    return null;
+    return localStorage.getItem("id");
   },
 };

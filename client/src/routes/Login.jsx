@@ -37,7 +37,7 @@ export default function Login() {
       });
       setLoading(false);
       setErrors(null);
-
+      localStorage.setItem("id", user.data.id);
       navigate("/home");
     } catch (err) {
       console.log(err);
