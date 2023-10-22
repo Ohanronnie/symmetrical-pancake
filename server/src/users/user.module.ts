@@ -64,11 +64,11 @@ export class UserModule {
             secure: true,
             path: "/",
           },
-          store: new TypeormStore({
+          /* store: new TypeormStore({
             cleanupLimit: 2,
             limitSubquery: true,
             ttl: 86400,
-          }).connect(this.sessionRepository),
+          }).connect(this.sessionRepository),*/
         }),
       )
       .forRoutes("*");
