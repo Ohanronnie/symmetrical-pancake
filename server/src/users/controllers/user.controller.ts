@@ -152,6 +152,12 @@ export class UserController {
   checkUsername(@User() user: IUser, @Param("username") username: string) {
     return this.userService.checkUsername(user.id, username);
   }
+  @Get("search")
+  @UseGuards(JwtAuthGuard)
+  search(@Query("value") value: string, @Query("tab") tab: string) {
+    if (!value || !tab) return [];
+    return this.userService.search(value, tab.toLowerCase(), 1);
+  }
   @Get("file/:name")
   getFile(@Param("name") name: string) {
     return new StreamableFile(createReadStream(join("assets", name)));

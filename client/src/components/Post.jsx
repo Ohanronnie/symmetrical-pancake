@@ -283,10 +283,10 @@ export default function Post({
               className="join join-vertical"
               onClick={posterId && navigate.bind(null, `/profile/${posterId}`)}
             >
-              <span className="text-gray-400 font-bold text-md join-item">
+              <span className="text-gray-400 font-bold text-sm join-item">
                 {name}
               </span>
-              <span className="join-item text-md text-gray-400">
+              <span className="join-item text-sm text-gray-400">
                 @{username}
               </span>
             </div>
@@ -297,7 +297,7 @@ export default function Post({
           <div className="mt-2">
             <p
               ref={seenRef}
-              className="text-slate-300"
+              className="text-slate-300 text-sm"
               onClick={setEnlarged.bind({}, true)}
             >
               {content}
@@ -310,27 +310,27 @@ export default function Post({
             <div className="flex my-2 justify-between text-slate-400">
               <div className="inline-flex justify-center items-center">
                 <button>
-                  <CommentIcon className="h-6 w-6" />
+                  <CommentIcon className="h-4 w-4" />
                 </button>
-                <span className="text-sm" onClick={setEnlarged.bind({}, true)}>
+                <span className="text-xs" onClick={setEnlarged.bind({}, true)}>
                   {comments.length}
                 </span>
               </div>
               <div className="inline-flex justify-center items-center">
                 <button className="" onClick={handleLikeChange}>
                   {likesArr?.find((r) => r == Cookie.get("c_user")) ? (
-                    <SHeartIcon className="h-6 w-6 text-pink-600" />
+                    <SHeartIcon className="h-4 w-4 text-pink-600" />
                   ) : (
-                    <HeartIcon className="h-6 w-6" />
+                    <HeartIcon className="h-4 w-4" />
                   )}
                 </button>
-                <span className="text-sm">{_likes}</span>
+                <span className="text-xs">{_likes}</span>
               </div>
               <div className="inline-flex justify-center items-center">
                 <button>
-                  <AdjustIcon className="h-6 w-6" />
+                  <AdjustIcon className="h-4 w-4" />
                 </button>
-                <span className="text-sm">{seen}</span>
+                <span className="text-xs">{seen}</span>
               </div>
             </div>
           </div>

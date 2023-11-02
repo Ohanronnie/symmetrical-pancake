@@ -55,14 +55,14 @@ export class UserModule {
         session({
           secret: this.configService.get("SESSION_SECRET"),
           resave: false,
-          saveUninitialized: true,
+          saveUninitialized: false,
           name: "datr",
-          proxy: true,
+          proxy: process.env.NODE_ENV === "production" ? true : false,
           cookie: {
             maxAge: 60 * 60 * 24 * 365,
-            sameSite: "none",
+            sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
             httpOnly: true,
-            secure: true,
+            secure: process.env.NODE_ENV === "production" ? true : false,
             path: "/",
           },
           store: new TypeormStore({

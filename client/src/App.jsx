@@ -12,6 +12,7 @@ import NotFound from "./components/404";
 import Profile from "./routes/Profile";
 import Compose from "./routes/Compose";
 import EditProfile from "./routes/EditProfile";
+import Search from "./routes/Search";
 
 import { Loading, useLoading } from "./components/Loading";
 import { axios } from "./utils/axios.js";
@@ -100,7 +101,7 @@ export default function App() {
           <Route path="/edit/profile" element={<ProtectedRoute />}>
             <Route path="" element={<EditProfile />} />
           </Route>
-
+          <Route path="/search" element={<Search />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

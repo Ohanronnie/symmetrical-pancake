@@ -380,7 +380,6 @@ export class UserService {
       return false;
     }
   }
-
   async updateProfile(details: IUpdateUser, id: number) {
     const user = await this.userRepository.findOneBy({ id });
     user.fullname = details.fullname;
@@ -388,5 +387,72 @@ export class UserService {
     user.avatar = details.avatar;
     await this.userRepository.save(user);
     return true;
+  }
+  async searchPost(value: string, userId: number) {
+    const posts = await this.postRepository.find({
+      relations: [
+        "likes",
+        "comments",
+        "user",
+        "likes.user",
+        "comments.user",
+        "seen",
+      ],
+    });
+    const user = await this.userRepository.findOneBy({ id: userId });
+    const POST_TO_BE_SENT = [];
+    for (let post of posts) {
+      if (post.content.match(new RegExp(value, "ig"))) {
+        POST_TO_BE_SENT.push({
+          postId: post.id,
+          fullname: post.user.fullname,
+          username: post.user.username,
+          userID: userId,
+          type: post.type,
+          likes: post.likes.map((e) => e.user.id),
+          comments: post.comments.map((e) => e.user.id),
+          content: post.content,
+          createdAt: post.createdAt,
+          url: post.url,
+          avatar: post.user.avatar,
+          seen: post.seen.length,
+          posterId: post.user.id,
+        });
+      }
+    }
+    return {
+      posts: POST_TO_BE_SENT.sort((a, b) => Math.random() - 0.5),
+    };
+  }
+  async searchProfile(value: string) {
+    const users = await this.userRepository.find();
+    const result = [];
+    for (let user of users) {
+      if (
+        user.username.match(new RegExp(value, "i")) ||
+        user.fullname.match(new RegExp(value, "i"))
+      ) {
+        result.push({
+          username: user.username,
+          fullname: user.fullname,
+          avatar: user.avatar,
+          id: user.id,
+        });
+      }
+    }
+    return result;
+  }
+  async search(value: string, tab: string, userId: number) {
+    if (!value || !tab) return [];
+    switch (tab) {
+      case "post":
+        return await this.searchPost(value, userId);
+        break;
+      case "profile":
+        return await this.searchProfile(value);
+        break;
+      default:
+        return await this.searchPost(value, userId);
+    }
   }
 }
