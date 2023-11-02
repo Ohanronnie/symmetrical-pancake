@@ -1,5 +1,6 @@
 import { Module, forwardRef } from "@nestjs/common";
 import { AuthService } from "./auth.service";
+import { TasksService } from "./cron.service";
 import { UserModule } from "../users/user.module";
 import { LocalStrategy } from "./local.strategy";
 //import { JwtStrategy } from "./jwt.strategy";
@@ -43,7 +44,7 @@ import { Repository } from "typeorm";
       Session,
     ]),
   ],
-  providers: [AuthService, LocalStrategy /*JwtStrategy*/],
+  providers: [AuthService, TasksService, LocalStrategy /*JwtStrategy*/],
   controllers: [AuthController],
   exports: [AuthService],
 })

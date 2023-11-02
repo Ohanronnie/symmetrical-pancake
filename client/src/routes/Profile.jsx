@@ -93,15 +93,14 @@ export default function Profile() {
               <ArrowLeftIcon className="h-4 w-10" />
             </button>
             <div className="join join-vertical">
-              <h4 className="join-item text-white font-bold text-lg">
+              <h4 className="join-item  text-white font-bold text-md">
                 {personalInfo && personalInfo.fullname}
               </h4>
-              <h5 className="join-item text-slate-500">
+              <h5 className="join-item text-slate-500 text-md">
                 {personalInfo && personalInfo.posts.length} posts
               </h5>
             </div>
           </nav>
-
           <section className="pb-6">
             <div className="h-36 bg-gray-500 w-full border-none">
               <div alt="" className="w-full h-36 border-none"></div>
@@ -134,14 +133,14 @@ export default function Profile() {
                 )}
               </div>
               <div className="join join-vertical ml-2">
-                <h4 className="join-item text-white font-bold text-lg">
+                <h4 className="join-item text-white font-bold text-sm">
                   {personalInfo.fullname}
                 </h4>
-                <h5 className="join-item text-slate-500">
+                <h5 className="join-item text-sm text-slate-500">
                   @{personalInfo.username}
                 </h5>
               </div>
-              <div className="font-normal mt-4 ml-2 text-lg text-white">
+              <div className="font-normal text-xs hidden mt-4 ml-2 text-lg text-white">
                 <h5>{personalInfo.bio}</h5>
               </div>
               <div className="ml-2 mt-2">
@@ -149,7 +148,7 @@ export default function Profile() {
                   <LinkIcon className="text-gray-700 h-4 w-4 mr-1" />{" "}
                   {personalInfo.url}
                 </h5>*/}
-                <h5 className="text-gray-700 flex items-center">
+                <h5 className="text-gray-700 text-sm flex items-center">
                   <CalendarDaysIcon className="text-gray-600 h-4 w-4 mr-1" />{" "}
                   {new Date(personalInfo.createdAt).toLocaleDateString(
                     "en-GB",
@@ -158,20 +157,21 @@ export default function Profile() {
                 </h5>
               </div>
               <div className="flex mt-2 ml-2">
-                <h5 className="text-md font-normal text-gray-600">
+                <h5 className="text-sm font-normal text-gray-600">
                   <span className="text-white mr-1">
                     {personalInfo.following}
                   </span>
-                  Following{" "}
+                  Following
                 </h5>
-                <h5 className="text-md font-normal text-gray-600 ml-6">
+                <h5 className="text-sm font-normal text-gray-600 ml-6">
                   <span className="text-white mr-1">
                     {personalInfo.followers}
                   </span>
-                  Followers{" "}
+                  Followers
                 </h5>
               </div>
-              <div className="w-full mt-6 font-medium text-gray-500 flex justify-between text-lg ml-2 px-4">
+              {/*              <div className="w-full mt-6 font-medium text-gray-500 flex justify-between text-md ml-2 px-4">
+              
                 <span
                   onClick={() => setPage("post")}
                   className={
@@ -192,7 +192,23 @@ export default function Profile() {
                 </span>
                 {/*               <span onClick={() => setPage("likes")} className="">
                   Likes
-                </span>*/}
+                </span>
+              </div>*/}
+              <div className="flex justify-between w-full mt-6 pb-1 border-b-solid border-b-[1px] border-b-gray-700">
+                <div className="w-full" onClick={() => setPage("post")}>
+                  <h3 className="text-white text-center text-sm w-full">
+                    Post
+                  </h3>
+                  {page === "post" && (
+                    <div className="w-full rounded-lg bg-[#008fff] h-1"></div>
+                  )}
+                </div>
+                <div className="w-full ml-2" onClick={() => setPage("comment")}>
+                  <h3 className="text-white text-center text-sm">Comment</h3>
+                  {page === "comment" && (
+                    <div className="w-full rounded-lg bg-[#008fff] h-1"></div>
+                  )}
+                </div>
               </div>
               <div className="mb-4">
                 {page === "comment" ? <Comments /> : page === "post" && Posts()}

@@ -96,12 +96,12 @@ function Comment({ name, username, content, avatar }) {
         <div className="flex items-center">
           <img src={avatar} className="w-10 h-10 rounded-full" />
           <div className="join join-vertical ml-2">
-            <h4 className="join-item text-gray-300 mr-2">{name}</h4>
-            <h5 className="join-item text-gray-400">@{username}</h5>
+            <h4 className="join-item text-sm text-gray-300 mr-2">{name}</h4>
+            <h5 className="join-item text-sm text-gray-400">@{username}</h5>
           </div>
         </div>
         <div className="mt-2">
-          <h4 className="text-gray-300 text-xl">{content}</h4>
+          <h4 className="text-gray-300 text-md">{content}</h4>
         </div>
       </div>
     </>
@@ -138,7 +138,6 @@ function PostComments({ action, postId }) {
         setCommentData(data);
       });
   }, []);
-  console.log(comments);
   return (
     <>
       <Overlay action={CLOSE.bind({}, action)} />
@@ -147,7 +146,7 @@ function PostComments({ action, postId }) {
           <div className="flex justify-center w-full">
             <button className="h-2 w-14 bg-gray-600 rounded-full"></button>
           </div>
-          <h4 className="text-gray-200 text-xl font-medium text-center mb-2 border-solid py-2 border-b-[1px] border-gray-700">
+          <h4 className="text-gray-200 text-lg font-medium text-center mb-2 border-solid py-2 border-b-[1px] border-gray-700">
             Comments
           </h4>
         </div>
@@ -175,7 +174,7 @@ function PostComments({ action, postId }) {
         >
           <textarea
             placeholder="Type Something?"
-            className="rounded-md text-white outline-none mr-2 p-2 w-full h-10 bg-gray-600"
+            className="rounded-md text-sm text-white outline-none mr-2 p-2 w-full h-10 bg-gray-600"
             onChange={handleChange}
             value={comment}
           />
@@ -290,9 +289,9 @@ export default function Post({
                 @{username}
               </span>
             </div>
-            <button className="text-gray-400" onClick={openModal}>
+            {/*<button className="text-gray-400" onClick={openModal}>
               <EllipsisVIcon className="h-8 w-8" />
-            </button>
+            </button>*/}
           </div>
           <div className="mt-2">
             <p

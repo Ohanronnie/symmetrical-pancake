@@ -94,13 +94,13 @@ export default function EditProfile() {
           <ArrowLeftIcon className="h-4 w-10" />
         </button>
         <div className="">
-          <h4 className="text-white font-bold text-lg text-center">
+          <h4 className="text-white font-bold text-md text-center">
             Edit Profile
           </h4>
         </div>
       </nav>
       <section className="mx-4 pb-8">
-        <h2 className="text-2xl font-medium text-white py-4">
+        <h2 className="text-lg font-medium text-white py-4">
           Edit Your Personal Details
         </h2>
         <div className="flex justify-center">

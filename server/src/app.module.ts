@@ -11,11 +11,13 @@ import { Follower } from "./users/entities/followers.entity";
 import { Session } from "./users/entities/session.entity";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { JwtModule } from "@nestjs/jwt";
+import { ScheduleModule } from "@nestjs/schedule";
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
     }),
+    ScheduleModule.forRoot(),
     TypeOrmModule.forRootAsync({
       useFactory: (configService: ConfigService) => {
         return {
