@@ -18,7 +18,7 @@ export default function Register() {
   const handleErrors = (name, value) => {
     switch (name) {
       case "username":
-        if (!/^([a-zA-Z])[0-9a-zA-Z_]{3,}$/.test(value))
+        if (!/^([a-zA-Z])[0-9a-zA-Z_ ]{3,}$/.test(value.trim()))
           setErrors((e) => ({
             ...e,
             username: "Username cannot contain special characters",
