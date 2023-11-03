@@ -15,3 +15,6 @@ client/*/.env
 .env
 log*
 *log*
+!server/assets/dummy.jpg
+server/assets/*jpg
+server/assets/*png
