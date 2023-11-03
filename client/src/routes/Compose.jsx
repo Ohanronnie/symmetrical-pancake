@@ -3,11 +3,13 @@ import avatar from "../assets/images/avatar.jpg";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { axios } from "../utils/axios.js";
+import { useLoading, Loading } from "../components/Loading";
 
 export default function Compose() {
   const [post, setPost] = useState("");
   const [image, setImage] = useState(null);
   const [imageUrl, setImageUrl] = useState(null);
+  const [loading, setLoading] = useLoading(false);
   const navigate = useNavigate();
   const handleChange = (e) => {
     setPost(e.target.value);
@@ -15,6 +17,7 @@ export default function Compose() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (post.length >= 2) {
+      setLoading(true);
       try {
         let url;
         if (image && imageUrl) {
@@ -30,7 +33,7 @@ export default function Compose() {
         });
         navigate("/home");
       } catch (err) {
-        alert(err?.response?.data?.message || err);
+        console.log(err?.response?.data?.message || err);
       }
     }
   };
@@ -67,6 +70,7 @@ export default function Compose() {
                     : "What's on your mind?."
                 }
                 onChange={handleChange}
+                disabled={loading}
               />
               <div className="border-solid border-t-gray-600 border-t-[1px] text-gray-600 w-full">
                 <div className="p-2">
@@ -76,6 +80,7 @@ export default function Compose() {
                     className="hidden"
                     id="file"
                     onChange={handleImage}
+                    disabled={loading}
                   />
                   <label htmlFor="file">
                     <CameraIcon className="w-6 h-6 p-1 flex justify-center bg-gray-800 rounded-md" />
@@ -89,7 +94,15 @@ export default function Compose() {
               </div>
             </div>
             <button className="my-4 h-10 text-white w-full border-[1px] border-solid border-[#008fff] hover:text-[#008fff] hover:bg-transparent bg-[#008fff] rounded-full">
-              Post
+              {!loading ? (
+                "Post"
+              ) : (
+                <div className="flex justify-center">
+                  {" "}
+                  <Loading svg={{ className: "h-6 w-6" }} />{" "}
+                  <p className="ml-2">Loading </p>
+                </div>
+              )}
             </button>
           </form>
         </div>

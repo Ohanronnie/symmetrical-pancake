@@ -49,7 +49,6 @@ export class UserModule {
     private readonly configService: ConfigService,
   ) {}
   configure(consumer: MiddlewareConsumer) {
-    console.log(process.env);
     consumer
       .apply(
         session({
@@ -57,7 +56,7 @@ export class UserModule {
           resave: false,
           saveUninitialized: false,
           name: "datr",
-          proxy: process.env.NODE_ENV === "production" ? true : false,
+          proxy: true,
           cookie: {
             maxAge: 60 * 60 * 24 * 365,
             sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",

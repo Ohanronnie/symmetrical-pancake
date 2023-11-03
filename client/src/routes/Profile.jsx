@@ -105,7 +105,7 @@ export default function Profile() {
             <div className="h-36 bg-gray-500 w-full border-none">
               <div alt="" className="w-full h-36 border-none"></div>
             </div>
-            <div className="mx-4">
+            <div className="mx-2">
               <div className="flex justify-between">
                 <img
                   src={personalInfo.avatar}
@@ -210,7 +210,7 @@ export default function Profile() {
                   )}
                 </div>
               </div>
-              <div className="mb-4">
+              <div className="mb-4 pb-8">
                 {page === "comment" ? <Comments /> : page === "post" && Posts()}
               </div>
             </div>
