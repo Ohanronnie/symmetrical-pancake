@@ -118,7 +118,7 @@ export default function Search() {
           </div>
         </div>
       </header>
-      <section>{(posts || profile) && <Content />}</section>
+      <section>{posts ? <Content /> : profile && <Content />}</section>
     </>
   );
 }
