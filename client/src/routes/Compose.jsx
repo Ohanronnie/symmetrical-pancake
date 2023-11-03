@@ -100,7 +100,7 @@ export default function Compose() {
                 <div className="flex justify-center">
                   {" "}
                   <Loading svg={{ className: "h-6 w-6" }} />{" "}
-                  <p className="ml-2">Loading </p>
+                  <p className="ml-2">Posting </p>
                 </div>
               )}
             </button>

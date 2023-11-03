@@ -190,7 +190,7 @@ export default function EditProfile() {
               <div className="flex justify-center">
                 {" "}
                 <Loading svg={{ className: "h-6 w-6" }} />{" "}
-                <p className="ml-2">Loading </p>
+                <p className="ml-2">Updating </p>
               </div>
             )}
           </button>

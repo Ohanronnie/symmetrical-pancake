@@ -7,10 +7,12 @@ import * as session from "express-session";
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {
     cors: {
-      origin: (origin, callback) => {
-        console.log(origin);
-        callback(null, origin);
-      },
+      origin: [
+        "http://localhost:5173",
+        "http://localhost:5173/",
+        "https://connect-hub.netlify.app",
+        "https://connect-hub.netlify.app/",
+      ],
       methods: ["GET", "POST", "DELETE"],
       credentials: true,
     },
