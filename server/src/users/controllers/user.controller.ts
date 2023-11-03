@@ -44,7 +44,7 @@ export class UserController {
     res.cookie("c_user", user.id, {
       maxAge: date.setFullYear(date.getFullYear() + 1),
       path: "/",
-      sameSite: "none",
+      sameSite: "lax",
       httpOnly: false,
       secure: true,
     });
