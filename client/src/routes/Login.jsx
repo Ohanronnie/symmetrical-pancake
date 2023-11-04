@@ -39,15 +39,15 @@ export default function Login() {
         setLoading(false);
         setErrors(null);
         localStorage.setItem("id", user.data.id);
-        localStorage.setitem("access_token", user.data["access_token"]);
+        localStorage.setItem("access_token", user.data.access_token);
         navigate("/home");
       } else {
         setErrors("Please fill all fields");
       }
     } catch (err) {
-      console.log(err);
+      console.error(err);
       setLoading(false);
-      let error = err.response.data.message;
+      let error = err.response?.data?.message;
       setErrors(error);
     }
   };
