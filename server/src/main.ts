@@ -22,24 +22,6 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe());
   app.use(cookieParser());
   app.set("trust proxy", true);
-  /*app.use(session({
-      secret: "JUSTIMAGINEXANDY",
-      resave: true,
-      saveUninitialized: true,
-      name: "datr",
-      cookie: {
-        maxAge: 60 * 60 * 24 * 365,
-        sameSite: "none",
-        httpOnly: true,
-        secure: true,
-        path: "/"
-      },
-      store: new TypeormStore({
-         cleanupLimit: 2,
-         limitSubquery: true,
-         ttl: 86400,
-       }).connect(this.sessionRepository),
-    }))*/
   await app.listen(process.env.PORT || 3000);
 }
 bootstrap();
