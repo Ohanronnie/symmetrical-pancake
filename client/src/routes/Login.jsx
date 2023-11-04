@@ -118,7 +118,7 @@ export default function Login() {
                 <span className="text-white text-md mx-2 px-2">Or</span>{" "}
                 <hr className="border-white bg-white w-[45%]" />
               </div>
-              <button className="mb-8 my-4 h-10 text-black w-full border-[1px] border-solid border-white hover:text-white hover:bg-transparent text-md bg-white rounded-xl flex items-center justify-center">
+              <button className="mb-4 my-4 h-10 text-black w-full border-[1px] border-solid border-white hover:text-white hover:bg-transparent text-sm bg-white rounded-xl flex items-center justify-center">
                 <img src={GoogleIcon} className="h-4 w-4 mx-2" alt="" />
                 Continue with Google
               </button>
