@@ -59,7 +59,7 @@ export class UserModule {
           proxy: true,
           cookie: {
             maxAge: 60 * 60 * 24 * 365,
-            sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+            sameSite: process.env.NODE_ENV === "production" ? "lax" : "lax",
             httpOnly: false,
             secure: process.env.NODE_ENV === "production" ? true : false,
             path: "/",
