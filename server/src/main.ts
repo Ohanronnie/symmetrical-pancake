@@ -12,6 +12,7 @@ async function bootstrap() {
         "http://localhost:5173/",
         "https://connect-hub.netlify.app",
         "https://connect-hub.netlify.app/",
+        "https://linkhub-b6g4.onrender.com",
       ],
       methods: ["GET", "POST", "DELETE"],
       credentials: true,
