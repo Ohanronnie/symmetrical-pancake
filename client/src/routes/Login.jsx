@@ -109,30 +109,21 @@ export default function Login() {
               <p className="text-red-900 mb-2 mt-1 text-sm">{errors}</p>
               <button
                 type={"submit"}
-                className="my-4 h-10 text-md text-white w-full border-[1px] border-solid border-[#008fff] hover:text-[#008fff] hover:bg-transparent bg-[#008fff] rounded-xl"
+                className="my-4 h-10 text-sm text-white w-full border-[1px] border-solid border-[#008fff] hover:text-[#008fff] hover:bg-transparent bg-[#008fff] rounded-full"
               >
                 Sign In
               </button>
               <div className="w-full flex items-center justify-center">
                 <hr className="border-white bg-white w-[45%]" />{" "}
-                <span className="text-white text-md mx-2 px-2">Or</span>{" "}
+                <span className="text-white text-sm mx-2 px-2">Or</span>{" "}
                 <hr className="border-white bg-white w-[45%]" />
               </div>
-              <button className="mb-4 my-4 h-10 text-black w-full border-[1px] border-solid border-white hover:text-white hover:bg-transparent text-sm bg-white rounded-xl flex items-center justify-center">
-                <img src={GoogleIcon} className="h-4 w-4 mx-2" alt="" />
-                Continue with Google
+              <button
+                onClick={() => navigate("/register/signup")}
+                className="mb-4 my-4 h-10 text-white w-full border-[1px] border-solid border-[#008fff] hover:text-white bg-transparent text-sm hover:bg-[#008fff] rounded-full flex items-center justify-center"
+              >
+                Sign Up
               </button>
-              <div className="">
-                <p className="text-sm text-gray-500">
-                  Not yet on SocialSphere?{" "}
-                  <Link to="/register/signup">
-                    {" "}
-                    <span className="font-medium text-sm text-[#008fff] underline">
-                      Register now
-                    </span>
-                  </Link>
-                </p>
-              </div>
             </form>
           </section>
         </>

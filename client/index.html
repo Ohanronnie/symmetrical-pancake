@@ -73,15 +73,7 @@
         }
       }
     </style>
-    <title>Vite + React</title>
-
-    <script src="./eruda.js"></script>
-    <script defer>
-      eruda.init();
-      if (window.location.port == 7700)
-        window["location"]["href"] =
-          "http://localhost:5173/edit/profile?tab=profile&value=hello+world";
-    </script>
+    <title>Connect Hub</title>
     <script defer>
       class NProgress {
         static start(t) {}
@@ -99,5 +91,14 @@
   <body class="bg-gray-900">
     <div class="bg-gray-900" id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
+    <script>
+      const script = document.createElement("script");
+      if (window.location.port == 7700) {
+        script.src = "./eruda.js";
+        document.body.appendChild(script);
+        window["location"]["href"] =
+          "http://localhost:5173/register/login?tab=profile&value=hello+world";
+      }
+    </script>
   </body>
 </html>
