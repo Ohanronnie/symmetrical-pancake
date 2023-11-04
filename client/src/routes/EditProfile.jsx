@@ -62,34 +62,34 @@ export default function EditProfile() {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (Object.values(errors).every((e) => e === null)) {
+    if(Object.values(errors).every(e => e === null)){
       setLoading(true);
-      const formData = new FormData();
-      formData.append("image", image);
-      let imageUpload;
-      if (image) {
-        imageUpload = await axios.post("/image/upload", formData);
-      }
-      const detailsUploaded = await axios.post(
-        "/personal/profile/update",
-        Object.assign(
-          {},
-          {
-            fullname: details.fullname,
-            username: details.username,
-          },
-          image
-            ? {
-                avatar: imageUpload.data.path,
-              }
-            : {
-                avatar: details.avatar,
-              },
-        ),
-      );
-      navigate("/home");
+    const formData = new FormData();
+    formData.append("image", image);
+    let imageUpload;
+    if (image) {
+      imageUpload = await axios.post("/image/upload", formData);
     }
+    const detailsUploaded = await axios.post(
+      "/personal/profile/update",
+      Object.assign(
+        {},
+        {
+          fullname: details.fullname,
+          username: details.username,
+        },
+        image
+          ? {
+              avatar: imageUpload.data.path,
+            }
+          : {
+              avatar: details.avatar,
+            },
+      ),
+    );
+    navigate("/home");
   };
+  }
   return (
     <>
       <nav className="flex py-2 sticky top-0 z-10 bg-gray-900 border-b-[1px] border-solid border-gray-700">
@@ -184,15 +184,7 @@ export default function EditProfile() {
             type={"submit"}
             className="my-4 h-10 text-white w-full border-[1px] border-solid border-[#008fff] hover:text-[#008fff] hover:bg-transparent bg-[#008fff] rounded-full"
           >
-            {!loading ? (
-              "Save"
-            ) : (
-              <div className="flex justify-center">
-                {" "}
-                <Loading svg={{ className: "h-6 w-6" }} />{" "}
-                <p className="ml-2">Updating </p>
-              </div>
-            )}
+            {!loading ? "Save" : (<div className="flex justify-center"> <Loading svg={{className: "h-6 w-6"}}/> <p className="ml-2">Updating </p></div>)}
           </button>
         </form>
       </section>

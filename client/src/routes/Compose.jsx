@@ -93,16 +93,7 @@ export default function Compose() {
                 </div>
               </div>
             </div>
-            <button className="my-4 h-10 text-white w-full border-[1px] border-solid border-[#008fff] hover:text-[#008fff] hover:bg-transparent bg-[#008fff] rounded-full">
-              {!loading ? (
-                "Post"
-              ) : (
-                <div className="flex justify-center">
-                  {" "}
-                  <Loading svg={{ className: "h-6 w-6" }} />{" "}
-                  <p className="ml-2">Posting </p>
-                </div>
-              )}
+            <button className="my-4 h-10 text-white w-full border-[1px] border-solid border-[#008fff] hover:text-[#008fff] hover:bg-transparent bg-[#008fff] rounded-full">{!loading ? "Post" : (<div className="flex justify-center"> <Loading svg={{className: "h-6 w-6"}}/> <p className="ml-2">Posting </p></div>)}
             </button>
           </form>
         </div>

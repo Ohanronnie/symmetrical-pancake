@@ -125,7 +125,7 @@ export class UserController {
     console.log(id);
     return this.userService.getUserDetailsById(id, user.id);
   }
-  /* @Post("image/upload")
+ /* @Post("image/upload")
   @UseGuards(JwtAuthGuard)
   @UseInterceptors(FileInterceptor("image", multerOptions))
   async uploadImage(

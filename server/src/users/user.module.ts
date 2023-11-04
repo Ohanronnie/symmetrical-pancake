@@ -56,11 +56,11 @@ export class UserModule {
           resave: false,
           saveUninitialized: false,
           name: "datr",
-          //          proxy: true,
+          proxy: true,
           cookie: {
             maxAge: 60 * 60 * 24 * 365,
             sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
-            httpOnly: true,
+            httpOnly: false,
             secure: process.env.NODE_ENV === "production" ? true : false,
             path: "/",
           },

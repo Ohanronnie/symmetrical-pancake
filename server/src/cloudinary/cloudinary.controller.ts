@@ -1,17 +1,11 @@
-import {
-  Controller,
-  UseInterceptors,
-  Post,
-  Req,
-  UploadedFile,
-} from "@nestjs/common";
+import { Controller,UseInterceptors,Post,Req, UploadedFile  } from '@nestjs/common';
 import { FileInterceptor } from "@nestjs/platform-express";
 import { multerOptions } from "../users/utils/multer";
 import { CloudinaryService } from "./cloudinary.service";
-@Controller("")
+@Controller('')
 export class CloudinaryController {
-  constructor(private readonly cloudinaryService: CloudinaryService) {}
-  @Post("image/upload")
+  constructor(private readonly cloudinaryService: CloudinaryService){}
+    @Post("image/upload")
   //@UseGuards(JwtAuthGuard)
   @UseInterceptors(FileInterceptor("image", multerOptions))
   async uploadImage(
@@ -20,4 +14,5 @@ export class CloudinaryController {
   ) {
     return this.cloudinaryService.uploadImage(file);
   }
+
 }
