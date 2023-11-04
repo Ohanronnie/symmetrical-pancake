@@ -26,10 +26,7 @@ export function sortAndFormatDate(date) {
       "Dec",
     ];
     return months[dateObj.getMonth()] + " " + dateObj.getDate() + " " + year;
-  } else if (diff >= oneWeek) {
-    // If it's greater than 7 days, return the day difference as "Xd"
-    return Math.floor(diff / oneDay) + "d";
-  } else if (diff >= oneDay) {
+  } else if (diff >= oneMonth) {
     // If it's within a month, return the month and day
     const months = [
       "Jan",
@@ -46,6 +43,9 @@ export function sortAndFormatDate(date) {
       "Dec",
     ];
     return months[dateObj.getMonth()] + " " + dateObj.getDate();
+  } else if (diff >= oneWeek || diff >= oneDay) {
+    // If it's greater than 7 days, return the day difference as "Xd"
+    return Math.floor(diff / oneDay) + "d";
   } else if (diff >= oneHour) {
     // If it's within the same day, return the hour difference
     return Math.floor(diff / oneHour) + "h";
