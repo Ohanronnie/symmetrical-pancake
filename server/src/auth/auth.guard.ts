@@ -18,7 +18,7 @@ export class JwtAuthGuard implements CanActivate {
   canActivate(ctx: ExecutionContext) {
     const request = ctx.switchToHttp().getRequest();
     console.log(request.session);
-    const jwt = request.session.jwt || request.headers["token"];
+    const jwt = request.session.jwt || request.headers["access_token"];
     try {
       const payload = this.jwtService.verify(jwt);
       request.user = payload as any;
