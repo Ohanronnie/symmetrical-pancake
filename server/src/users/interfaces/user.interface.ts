@@ -8,4 +8,6 @@ export interface IUpdateUser {
   fullname: string;
   username: string;
   avatar: string;
+  bio: string;
+  url: string;
 }

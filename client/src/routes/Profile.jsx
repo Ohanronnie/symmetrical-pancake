@@ -10,6 +10,7 @@ import { useParams } from "react-router-dom";
 import { Loading } from "../components/Loading";
 import { Link, useNavigate } from "react-router-dom";
 import Footer from "../components/Footer";
+import Verify from "../components/Verify";
 export default function Profile() {
   const [posts, setPosts] = useState(null);
   const [comments, setComments] = useState(null);
@@ -31,6 +32,7 @@ export default function Profile() {
   const postProps = (curr) => ({
     name: curr.fullname,
     username: curr.username,
+    verified: curr.verified,
     content: curr.content,
     likes: curr.likes,
     comments: curr.comments,
@@ -67,17 +69,17 @@ export default function Profile() {
           <div className="w-full">
             <div className="w-full flex justify-between">
               <div className="join join-vertical">
-                <span className="text-gray-400 font-bold text-md join-item">
-                  {data.fullname}
+                <span className="text-gray-400 font-bold text-sm join-item">
+                  {data.fullname} <Verify verified={data.verified} />
                 </span>
-                <span className="join-item text-md text-gray-400">
+                <span className="join-item text-sm text-gray-400">
                   @{data.username}
                 </span>
               </div>
               <button className="text-gray-400"></button>
             </div>
             <div className="mt-2">
-              <p className="text-slate-300">{data.content}</p>
+              <p className="text-slate-300 text-sm">{data.content}</p>
             </div>
           </div>
         </div>
@@ -94,10 +96,11 @@ export default function Profile() {
             </button>
             <div className="join join-vertical">
               <h4 className="join-item  text-white font-bold text-md">
-                {personalInfo && personalInfo.fullname}
+                {personalInfo.fullname}{" "}
+                <Verify verified={personalInfo.verified} />
               </h4>
               <h5 className="join-item text-slate-500 text-md">
-                {personalInfo && personalInfo.posts.length} posts
+                {personalInfo.posts.length} posts
               </h5>
             </div>
           </nav>
@@ -134,20 +137,28 @@ export default function Profile() {
               </div>
               <div className="join join-vertical ml-2">
                 <h4 className="join-item text-white font-bold text-sm">
-                  {personalInfo.fullname}
+                  {personalInfo.fullname}{" "}
+                  <Verify verified={personalInfo.verified} />
                 </h4>
                 <h5 className="join-item text-sm text-slate-500">
                   @{personalInfo.username}
                 </h5>
               </div>
-              <div className="font-normal text-xs hidden mt-4 ml-2 text-lg text-white">
-                <h5>{personalInfo.bio}</h5>
-              </div>
+              {personalInfo.bio && (
+                <div className="font-normal text-sm mt-4 ml-2 text-lg text-white">
+                  <h5>{personalInfo.bio}</h5>
+                </div>
+              )}
               <div className="ml-2 mt-2">
-                {/*   <h5 className="text-blue-700 flex items-center">
-                  <LinkIcon className="text-gray-700 h-4 w-4 mr-1" />{" "}
-                  {personalInfo.url}
-                </h5>*/}
+                {personalInfo.url && (
+                  <a
+                    href={personalInfo.url}
+                    className="text-blue-700 flex items-center"
+                  >
+                    <LinkIcon className="text-gray-700 text-sm h-4 w-4 mr-1" />{" "}
+                    {personalInfo.url}
+                  </a>
+                )}
                 <h5 className="text-gray-700 text-sm flex items-center">
                   <CalendarDaysIcon className="text-gray-600 h-4 w-4 mr-1" />{" "}
                   {new Date(personalInfo.createdAt).toLocaleDateString(

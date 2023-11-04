@@ -35,4 +35,6 @@ export class UpdateUserDto {
   username: string;
   @IsNotEmpty()
   avatar: string;
+  bio: string;
+  url: string;
 }

@@ -59,6 +59,7 @@ export class UserService {
       postId: post.id,
       fullname: post.user.fullname,
       username: post.user.username,
+      verified: post.user.verified,
       userID: userId,
       type: post.type,
       likes: post.likes.map((e) => e.user.id),
@@ -109,6 +110,7 @@ export class UserService {
         postId: post.id,
         fullname: post.user.fullname,
         username: post.user.username,
+        verified: post.user.verified,
         userID: userId,
         type: post.type,
         likes: post.likes.map((e) => e.user.id),
@@ -149,6 +151,7 @@ export class UserService {
       postId: post.id,
       fullname: post.user.fullname,
       username: post.user.username,
+      verified: post.user.verified,
       userID: userId,
       type: post.type,
       likes: post.likes.map((e) => e.user.id),
@@ -173,7 +176,6 @@ export class UserService {
       relations: ["user"],
       // loadRelationIds: true
     });
-    console.log(comments);
     return comments
       .sort((comment) => Math.random() - 0.5)
       .map((e) => ({
@@ -185,6 +187,7 @@ export class UserService {
           username: e.user.username,
           id: e.user.id,
           avatar: e.user.avatar,
+          verified: e.user.verified,
         },
       }));
   }
@@ -256,6 +259,7 @@ export class UserService {
         fullname: user.fullname,
         username: user.username,
         avatar: user.avatar,
+        verified: user.verified,
       },
       content,
     };
@@ -339,17 +343,39 @@ export class UserService {
         "comments.post.seen",
       ],
     });
+    const comments = await this.commentRepository.find({
+      where: {
+        user: {
+          id: userId,
+        },
+      },
+      relations: [
+        "post.likes",
+        "post.comments",
+        "post.likes.user",
+        "post.comments.user",
+        "post.user",
+        "post.seen",
+        "user",
+      ],
+    });
     let _iFollow = _user.followers.find((e) => e.following.id == myId);
 
     const user = {
       fullname: _user.fullname,
       username: _user.username,
       avatar: _user.avatar,
+      bio: _user.bio,
+      url: _user.url,
+      verified: _user.verified,
       cover: _user.avatar,
       followers: _user.followers.length,
       following: _user.following.length,
-      comments: _user.comments.map((comment) => ({
-        ...this.formatPost(comment.post, _user.id),
+      comments: comments.map((comment) => ({
+        fullname: comment.user.fullname,
+        username: comment.user.username,
+        verified: comment.user.verified,
+        avatar: comment.user.avatar,
         content: comment.content,
       })),
       posts: _user.posts.map((post) => this.formatPost(post, myId)),
@@ -366,6 +392,8 @@ export class UserService {
       username: user.username,
       fullname: user.fullname,
       avatar: user.avatar,
+      url: user.url,
+      bio: user.bio,
     };
   }
   async checkUsername(id: number, username: string) {
@@ -385,6 +413,8 @@ export class UserService {
     user.fullname = details.fullname;
     user.username = details.username;
     user.avatar = details.avatar;
+    if (details.url) user.url = details.url;
+    if (details.bio) user.bio = details.bio;
     await this.userRepository.save(user);
     return true;
   }
@@ -407,6 +437,7 @@ export class UserService {
           postId: post.id,
           fullname: post.user.fullname,
           username: post.user.username,
+          verified: post.user.verified,
           userID: userId,
           type: post.type,
           likes: post.likes.map((e) => e.user.id),
@@ -435,6 +466,7 @@ export class UserService {
         result.push({
           username: user.username,
           fullname: user.fullname,
+          verified: user.verified,
           avatar: user.avatar,
           id: user.id,
         });

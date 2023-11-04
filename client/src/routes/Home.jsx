@@ -29,6 +29,7 @@ export default function Home() {
     url: curr.url,
     postId: curr.postId,
     posterId: curr.posterId,
+    verified: curr.verified,
   });
   return (
     <div className="">

@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { axios } from "../utils/axios.js";
 import Header from "../components/Header";
 import Post from "../components/Post";
+import Verify from "../components/Verify";
 export default function Search() {
   const location = useLocation();
   const [query, setQuery] = useState({});
@@ -26,17 +27,18 @@ export default function Search() {
     });
   }, [query]);
   const postProps = (curr) => ({
-    name: [curr.fullname],
+    name: curr.fullname,
     username: curr.username,
+    verified: curr.verified,
     content: curr.content,
-    likes: [curr.likes],
-    comments: [curr.comments],
+    likes: curr.likes,
+    comments: curr.comments,
     seen: curr.seen,
     avatar: curr.avatar,
     url: curr.url,
     postId: curr.postId,
   });
-  const Profile = ({ userId, name, avatar, username }) => {
+  const Profile = ({ userId, name, avatar, username, verified }) => {
     return (
       <>
         <div className="flex px-2 py-2 border-b-[1px] border-t-[1px] border-solid border-gray-700">
@@ -48,7 +50,7 @@ export default function Search() {
                 onClick={userId && navigate.bind(null, `/profile/${userId}`)}
               >
                 <span className="text-gray-400 font-bold text-sm join-item">
-                  {name}
+                  {name} <Verify verified={verified} />
                 </span>
                 <span className="join-item text-sm text-gray-400">
                   @{username}
@@ -72,6 +74,7 @@ export default function Search() {
                 name={curr.fullname}
                 userId={curr.id}
                 key={curr.id}
+                verified={curr.verified}
               />
             ))
           : posts &&

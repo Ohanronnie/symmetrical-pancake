@@ -77,6 +77,8 @@ export default function EditProfile() {
           {
             fullname: details.fullname,
             username: details.username,
+            bio: details.bio,
+            url: details.url,
           },
           image
             ? {
@@ -179,7 +181,52 @@ export default function EditProfile() {
             </div>
             <p className="text-red-900 mt-2 text-sm">{errors["fullname"]}</p>
           </div>
-
+          <div className="my-4">
+            <div className="relative">
+              <input
+                id="floating_input"
+                className="text-gray-400 bg-gray-900 border-[1px] hover:border-[#008fff] input input-bordered border-gray-600 w-full w-full text-sm text-gray-400 bg-transparent rounded-xl border-1 appearance-none dark:text-gray-400 focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-500 peer"
+                type={"text"}
+                value={details["bio"] || ""}
+                onChange={handleChange}
+                onInput={handleErrors}
+                name="bio"
+                placeholder=""
+                disabled={loading}
+              />
+              <label
+                for="floating_input"
+                className="absolute text-sm text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-white peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1"
+              >
+                {" "}
+                {"Bio"}{" "}
+              </label>
+            </div>
+            <p className="text-red-900 mt-2 text-sm"></p>
+          </div>
+          <div className="my-4">
+            <div className="relative">
+              <input
+                id="floating_input"
+                className="text-gray-400 bg-gray-900 border-[1px] hover:border-[#008fff] input input-bordered border-gray-600 w-full w-full text-sm text-gray-400 bg-transparent rounded-xl border-1 appearance-none dark:text-gray-400 focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-500 peer"
+                type={"text"}
+                value={details["url"] || ""}
+                onChange={handleChange}
+                onInput={handleErrors}
+                name="url"
+                placeholder=""
+                disabled={loading}
+              />
+              <label
+                for="floating_input"
+                className="absolute text-sm text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-white peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1"
+              >
+                {" "}
+                {"Website url"}{" "}
+              </label>
+            </div>
+            <p className="text-red-900 mt-2 text-sm"></p>
+          </div>
           <button
             type={"submit"}
             className="my-4 h-10 text-white w-full border-[1px] border-solid border-[#008fff] hover:text-[#008fff] hover:bg-transparent bg-[#008fff] rounded-full"

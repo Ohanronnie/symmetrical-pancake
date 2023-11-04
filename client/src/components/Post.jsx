@@ -15,6 +15,7 @@ import { useState, useEffect, useRef } from "react";
 import { Cookie } from "../utils/cookie.js";
 import { axios } from "../utils/axios.js";
 import { useNavigate } from "react-router-dom";
+import Verify from "./Verify";
 export const css = {
   position: "fixed",
   top: 0,
@@ -89,14 +90,16 @@ function PostModal({ action }) {
   );
 }
 
-function Comment({ name, username, content, avatar }) {
+function Comment({ name, username, content, avatar, verified }) {
   return (
     <>
       <div className="border-solid py-2 border-b-[1px] border-gray-700">
         <div className="flex items-center">
           <img src={avatar} className="w-10 h-10 rounded-full" />
           <div className="join join-vertical ml-2">
-            <h4 className="join-item text-sm text-gray-300 mr-2">{name}</h4>
+            <h4 className="join-item text-sm text-gray-300 mr-2">
+              {name} <Verify verified={verified} />
+            </h4>
             <h5 className="join-item text-sm text-gray-400">@{username}</h5>
           </div>
         </div>
@@ -159,6 +162,7 @@ function PostComments({ action, postId }) {
                 username={user.username}
                 content={content}
                 avatar={user.avatar}
+                verified={user.verified}
               />
             ))
           ) : (
@@ -197,6 +201,7 @@ export default function Post({
   url,
   postId,
   posterId,
+  verified,
 }) {
   const [opened, setOpened] = useState(false);
   const [enlarged, setEnlarged] = useState(false);
@@ -283,7 +288,7 @@ export default function Post({
               onClick={posterId && navigate.bind(null, `/profile/${posterId}`)}
             >
               <span className="text-gray-400 font-bold text-sm join-item">
-                {name}
+                {name} <Verify verified={verified} />
               </span>
               <span className="join-item text-sm text-gray-400">
                 @{username}

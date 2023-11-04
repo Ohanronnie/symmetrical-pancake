@@ -102,7 +102,6 @@ export class UserController {
     @Body() body: any,
     @Param("postId") postId: number,
   ) {
-    console.log(body);
     return await this.userService.createComment(body.content, user.id, postId);
   }
   @Get("post/comments")
@@ -114,7 +113,6 @@ export class UserController {
   @UseGuards(JwtAuthGuard)
   async getPostByUserId(@User() user: IUser, @Param("userId") userId: number) {
     const post = await this.userService.getPostByUserId(userId);
-    console.log(post);
     return post;
   }
   @Post("follow/:id")

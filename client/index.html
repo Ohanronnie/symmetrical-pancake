@@ -93,11 +93,14 @@
     <script type="module" src="/src/main.jsx"></script>
     <script>
       const script = document.createElement("script");
-      if (window.location.port == 7700) {
-        script.src = "./eruda.js";
+      if (window.location.port == 5173) {
+        script.src = "/eruda.js";
         document.body.appendChild(script);
+        eruda.init();
+      }
+      if (window.location.port == 7700) {
         window["location"]["href"] =
-          "http://localhost:5173/register/login?tab=profile&value=hello+world";
+          "http://localhost:5173/home?tab=profile&value=hello+world";
       }
     </script>
   </body>

@@ -26,6 +26,12 @@ export class User {
   username: string;
   @Column({ type: "text" })
   email: string;
+  @Column({ type: "text", nullable: true })
+  bio: string;
+  @Column({ type: "text", nullable: true })
+  url: string;
+  @Column({ type: "boolean", default: false })
+  verified: boolean;
   @OneToMany((type) => Follower, (follow) => follow.followers)
   followers: Follower[];
   @OneToMany((type) => Follower, (follow) => follow.following)
