@@ -40,6 +40,7 @@ export default function Profile() {
     avatar: curr.avatar,
     url: curr.url,
     postId: curr.postId,
+    createdAt: curr.createdAt,
   });
   function Follow() {
     axios.post("/follow/" + id);

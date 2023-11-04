@@ -30,6 +30,7 @@ export default function Home() {
     postId: curr.postId,
     posterId: curr.posterId,
     verified: curr.verified,
+    createdAt: curr.createdAt,
   });
   return (
     <div className="">

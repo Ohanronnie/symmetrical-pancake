@@ -14,6 +14,7 @@ import { Loading, useLoading } from "./Loading.jsx";
 import { useState, useEffect, useRef } from "react";
 import { Cookie } from "../utils/cookie.js";
 import { axios } from "../utils/axios.js";
+import { sortAndFormatDate } from "../utils/formatDate.js";
 import { useNavigate } from "react-router-dom";
 import Verify from "./Verify";
 export const css = {
@@ -202,6 +203,7 @@ export default function Post({
   postId,
   posterId,
   verified,
+  createdAt,
 }) {
   const [opened, setOpened] = useState(false);
   const [enlarged, setEnlarged] = useState(false);
@@ -291,7 +293,7 @@ export default function Post({
                 {name} <Verify verified={verified} />
               </span>
               <span className="join-item text-sm text-gray-400">
-                @{username}
+                @{username} • {sortAndFormatDate(createdAt)}
               </span>
             </div>
             {/*<button className="text-gray-400" onClick={openModal}>

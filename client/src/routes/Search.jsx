@@ -37,6 +37,7 @@ export default function Search() {
     avatar: curr.avatar,
     url: curr.url,
     postId: curr.postId,
+    createdAt: curr.createdAt,
   });
   const Profile = ({ userId, name, avatar, username, verified }) => {
     return (

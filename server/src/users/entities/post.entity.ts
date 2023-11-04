@@ -5,6 +5,7 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   Column,
+  CreateDateColumn,
 } from "typeorm";
 import { User } from "./user.entity";
 import { IPost } from "../interfaces/post.interface";
@@ -29,6 +30,9 @@ export class Post {
   seen: Seen[];
   @ManyToOne((type) => User, (user) => user.posts)
   user: User;
-  @Column({ type: "timestamp", default: new Date() })
+  @CreateDateColumn({
+    name: "createdAt",
+    type: "timestamp",
+  })
   createdAt: Date;
 }
