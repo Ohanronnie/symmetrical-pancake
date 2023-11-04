@@ -153,9 +153,9 @@ export default function Profile() {
                 {personalInfo.url && (
                   <a
                     href={personalInfo.url}
-                    className="text-blue-700 flex items-center"
+                    className="text-blue-700 text-sm flex items-center"
                   >
-                    <LinkIcon className="text-gray-700 text-sm h-4 w-4 mr-1" />{" "}
+                    <LinkIcon className="text-gray-700  h-4 w-4 mr-1" />{" "}
                     {personalInfo.url}
                   </a>
                 )}

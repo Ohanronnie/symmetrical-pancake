@@ -10,7 +10,7 @@ export default function CreatePostBox({ avatar }) {
       <input
         type="text"
         placeholder="Type something"
-        className="input border-gray-700 bg-gray-900 input-bordered w-10/12 h-8"
+        className="input border-gray-700 text-sm bg-gray-900 input-bordered w-10/12 h-8"
       />
     </div>
   );
