@@ -95,11 +95,11 @@ export default function Profile() {
               <ArrowLeftIcon className="h-4 w-10" />
             </button>
             <div className="join join-vertical">
-              <h4 className="join-item  text-white font-bold text-md">
+              <h4 className="join-item  text-white font-bold text-sm">
                 {personalInfo.fullname}{" "}
                 <Verify verified={personalInfo.verified} />
               </h4>
-              <h5 className="join-item text-slate-500 text-md">
+              <h5 className="join-item text-slate-500 text-sm">
                 {personalInfo.posts.length} posts
               </h5>
             </div>
