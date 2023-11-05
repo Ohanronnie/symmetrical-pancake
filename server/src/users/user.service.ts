@@ -377,6 +377,7 @@ export class UserService {
         verified: comment.user.verified,
         avatar: comment.user.avatar,
         content: comment.content,
+        createdAt: comment.createdAt,
       })),
       posts: _user.posts.map((post) => this.formatPost(post, myId)),
       createdAt: _user.createdAt,

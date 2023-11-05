@@ -11,6 +11,7 @@ import { Loading } from "../components/Loading";
 import { Link, useNavigate } from "react-router-dom";
 import Footer from "../components/Footer";
 import Verify from "../components/Verify";
+import { sortAndFormatDate } from "../utils/formatDate.js";
 export default function Profile() {
   const [posts, setPosts] = useState(null);
   const [comments, setComments] = useState(null);
@@ -74,7 +75,7 @@ export default function Profile() {
                   {data.fullname} <Verify verified={data.verified} />
                 </span>
                 <span className="join-item text-sm text-gray-400">
-                  @{data.username}
+                  @{data.username} • {sortAndFormatDate(data.createdAt)}
                 </span>
               </div>
               <button className="text-gray-400"></button>

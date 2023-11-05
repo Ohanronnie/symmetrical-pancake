@@ -91,7 +91,7 @@ function PostModal({ action }) {
   );
 }
 
-function Comment({ name, username, content, avatar, verified }) {
+function Comment({ name, username, content, avatar, verified, createdAt }) {
   return (
     <>
       <div className="border-solid py-2 border-b-[1px] border-gray-700">
@@ -101,7 +101,9 @@ function Comment({ name, username, content, avatar, verified }) {
             <h4 className="join-item text-sm text-gray-300 mr-2">
               {name} <Verify verified={verified} />
             </h4>
-            <h5 className="join-item text-sm text-gray-400">@{username}</h5>
+            <h5 className="join-item text-sm text-gray-400">
+              @{username} • {sortAndFormatDate(createdAt)}
+            </h5>
           </div>
         </div>
         <div className="mt-2">
@@ -156,7 +158,7 @@ function PostComments({ action, postId }) {
         </div>
         <div className="overflow-scroll h-full pb-4">
           {comments ? (
-            comments.map(({ content, user }) => (
+            comments.map(({ content, user, createdAt }) => (
               <Comment
                 key={Math.random()}
                 name={user.fullname}
@@ -164,6 +166,7 @@ function PostComments({ action, postId }) {
                 content={content}
                 avatar={user.avatar}
                 verified={user.verified}
+                createdAt={createdAt}
               />
             ))
           ) : (

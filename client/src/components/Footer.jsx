@@ -1,4 +1,8 @@
-import { HomeIcon, UserCircleIcon } from "@heroicons/react/24/outline";
+import {
+  HomeIcon,
+  UserCircleIcon,
+  BellSnoozeIcon,
+} from "@heroicons/react/24/outline";
 import { useNavigate } from "react-router-dom";
 import { Cookie } from "../utils/cookie.js";
 export default function Footer() {
@@ -27,6 +31,14 @@ export default function Footer() {
         } text-white bg-gray-900`}
       >
         <UserCircleIcon className="h-5 w-5" />
+      </button>
+      <button
+        onClick={goTo("/profile/" + Cookie.get("c_user"))}
+        className={`${
+          isActive("/profile/" + Cookie.get("c_user")) && "active"
+        } text-white bg-gray-900`}
+      >
+        <BellSnoozeIcon className="h-5 w-5" />
       </button>
     </div>
   );
