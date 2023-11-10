@@ -318,7 +318,7 @@ let UserService = class UserService {
                 verified: user.verified,
             },
             content,
-            likes: _comment.likes.map((e) => e.id),
+            likes: [],
         };
     }
     async getPostByUserId(userId) {

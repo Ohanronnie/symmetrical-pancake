@@ -30,7 +30,7 @@ export declare class UserController {
         username: string;
         verified: boolean;
         userID: number;
-        type: "image" | "video" | "text";
+        type: "text" | "image" | "video";
         likes: number[];
         comments: any[];
         url: string;
@@ -52,7 +52,7 @@ export declare class UserController {
             verified: boolean;
         };
         content: string;
-        likes: number[];
+        likes: any[];
     }>;
     getComment(query: any): Promise<{
         id: number;

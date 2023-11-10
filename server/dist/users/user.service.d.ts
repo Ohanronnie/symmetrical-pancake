@@ -93,7 +93,7 @@ export declare class UserService {
             verified: boolean;
         };
         content: string;
-        likes: number[];
+        likes: any[];
     }>;
     getPostByUserId(userId: number): Promise<Post[]>;
     follow(userId: number, followerId: number): Promise<boolean>;
