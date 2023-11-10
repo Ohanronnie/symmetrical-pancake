@@ -33,9 +33,9 @@ export default function Footer() {
         <UserCircleIcon className="h-5 w-5" />
       </button>
       <button
-        onClick={goTo("/profile/" + Cookie.get("c_user"))}
+        onClick={goTo("/notifications/")}
         className={`${
-          isActive("/profile/" + Cookie.get("c_user")) && "active"
+          isActive("/notifications") && "active"
         } text-white bg-gray-900`}
       >
         <BellSnoozeIcon className="h-5 w-5" />

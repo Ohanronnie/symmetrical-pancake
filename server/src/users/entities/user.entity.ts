@@ -14,6 +14,8 @@ import { Like } from "./like.entity";
 import { Comment } from "./comment.entity";
 import { Seen } from "./seen.entity";
 import { Follower } from "./followers.entity";
+import { CommentLike } from "./like-comment.entity";
+import { Notification } from "./notification.entity";
 @Entity()
 export class User {
   @PrimaryGeneratedColumn()
@@ -52,8 +54,12 @@ export class User {
   likes: Like[];
   @OneToMany((type) => Comment, (comment) => comment.user)
   comments: Comment[];
+  @OneToMany((type) => CommentLike, (like) => like.user)
+  commentLikes: CommentLike[];
   @OneToMany((type) => Seen, (seen) => seen.user)
   seen: Post[];
+  @OneToMany((type) => Notification, (notification) => notification.user)
+  notifications: Notification[];
   @BeforeInsert()
   async hashPassword() {
     this.password = bcrypt.hashSync(this.password, 10);

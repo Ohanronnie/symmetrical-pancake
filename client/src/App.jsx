@@ -13,7 +13,8 @@ import Profile from "./routes/Profile";
 import Compose from "./routes/Compose";
 import EditProfile from "./routes/EditProfile";
 import Search from "./routes/Search";
-
+import Post from "./routes/Post";
+import Notification from "./routes/Notification";
 import { Loading, useLoading } from "./components/Loading";
 import { axios } from "./utils/axios.js";
 import { useState, useEffect } from "react";
@@ -83,7 +84,7 @@ export default function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<ProtectedRoute />}>
-            <Route path="" element={<Home />} />
+            <Route path="" element={<Navigate to="/home" replace />} />
           </Route>
           <Route path="/home" element={<ProtectedRoute />}>
             <Route path="" element={<Home />} />
@@ -101,7 +102,13 @@ export default function App() {
           <Route path="/edit/profile" element={<ProtectedRoute />}>
             <Route path="" element={<EditProfile />} />
           </Route>
-          <Route path="/search" element={<Search />} />
+          <Route path="/search" element={<ProtectedRoute />}>
+            <Route path="" element={<Search />} />
+          </Route>
+          {/*          <Route path="/post/:id" element={<Post />} />*/}
+          <Route path="/notifications" element={<ProtectedRoute />}>
+            <Route path="" element={<Notification />} />
+          </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

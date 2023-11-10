@@ -1,20 +1,4 @@
-.*.sh*
-server/*/.env
-server/.env
-server/*/*/.env
-server/node_modules
-server/test
-client/node_modules
-server/dist
-client/js
-watchit.json
-push
-client/.env
-client/*/.env
-*.save*
-.env
-log*
-*log*
-server/assets/*jpg
-server/assets/*png
+.*.sh* server/*/.env server/.env server/*/*/.env server/node_modules server/test
+client/node_modules server/dist client/js watchit.json push client/.env
+client/*/.env *.save* .env log* *log* server/assets/*jpg server/assets/*png
 !server/assets/dummy.jpg

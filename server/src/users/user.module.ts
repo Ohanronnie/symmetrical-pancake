@@ -11,6 +11,8 @@ import { Follower } from "./entities/followers.entity";
 import { ConfigService } from "@nestjs/config";
 import { Session } from "./entities/session.entity";
 import { Seen } from "./entities/seen.entity";
+import { CommentLike } from "./entities/like-comment.entity";
+import { Notification } from "./entities/notification.entity";
 import * as session from "express-session";
 import { TypeormStore } from "connect-typeorm";
 import { Repository } from "typeorm";
@@ -36,6 +38,8 @@ import { AuthModule } from "../auth/auth.module";
       Seen,
       Follower,
       Session,
+      CommentLike,
+      Notification,
     ]),
   ],
   controllers: [UserController],

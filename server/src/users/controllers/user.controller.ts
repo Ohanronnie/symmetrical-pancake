@@ -95,6 +95,15 @@ export class UserController {
     const seen = await this.userService.handleSeen(postId, user.id);
     return {};
   }
+  @Post("post/comment/like/:commentId")
+  @UseGuards(JwtAuthGuard)
+  async handleCommentLike(
+    @User() user: IUser,
+    @Param("commentId") commentId: number,
+  ) {
+    const like = await this.userService.handleCommentLikes(commentId, user.id);
+    return {};
+  }
   @Post("post/comment/:postId")
   @UseGuards(JwtAuthGuard)
   async handleComment(
@@ -104,9 +113,9 @@ export class UserController {
   ) {
     return await this.userService.createComment(body.content, user.id, postId);
   }
+
   @Get("post/comments")
   async getComment(@Query() query: any) {
-    console.log(query);
     return this.userService.getComments(query.postId, query.skip, query.take);
   }
   @Get("post/user/:userId")
@@ -158,6 +167,11 @@ export class UserController {
   search(@Query("value") value: string, @Query("tab") tab: string) {
     if (!value || !tab) return [];
     return this.userService.search(value, tab.toLowerCase(), 1);
+  }
+  @Get("notifications")
+  @UseGuards(JwtAuthGuard)
+  notification(@User() user: IUser) {
+    return this.userService.getNotification(user.id);
   }
   @Get("file/:name")
   getFile(@Param("name") name: string) {

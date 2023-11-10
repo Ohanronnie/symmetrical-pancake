@@ -9,6 +9,8 @@ import { Like } from "./users/entities/like.entity";
 import { Seen } from "./users/entities/seen.entity";
 import { Follower } from "./users/entities/followers.entity";
 import { Session } from "./users/entities/session.entity";
+import { CommentLike } from "./users/entities/like-comment.entity";
+import { Notification } from "./users/entities/notification.entity";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { JwtModule } from "@nestjs/jwt";
 import { ScheduleModule } from "@nestjs/schedule";
@@ -28,7 +30,17 @@ import { CloudinaryModule } from "./cloudinary/cloudinary.module";
           username: configService.get("DATABASE_USER"),
           password: configService.get("DATABASE_PASSWORD"),
           database: configService.get("DATABASE_NAME"),
-          entities: [User, Post, Like, Comment, Follower, Session, Seen],
+          entities: [
+            User,
+            Post,
+            Like,
+            Comment,
+            Follower,
+            Session,
+            Seen,
+            CommentLike,
+            Notification,
+          ],
           synchronize: true,
         };
       },

@@ -91,23 +91,72 @@ function PostModal({ action }) {
   );
 }
 
-function Comment({ name, username, content, avatar, verified, createdAt }) {
+function Comment({
+  name,
+  username,
+  content,
+  avatar,
+  verified,
+  createdAt,
+  type,
+  likes,
+  commentId,
+}) {
+  const [TEMP_LIKES_ARRAY, setTEMP_LIKES_ARRAY] = useState([]);
+
+  useEffect(function () {
+    setTEMP_LIKES_ARRAY(likes);
+  }, []);
+  const handleLikeChange = () => {
+    const c_user = Cookie.get("c_user");
+    if (TEMP_LIKES_ARRAY.find((id) => id == c_user)) {
+      setTEMP_LIKES_ARRAY((current) =>
+        current.splice(
+          current.findIndex((id) => id == c_user),
+          1,
+        ),
+      );
+    } else {
+      setTEMP_LIKES_ARRAY((current) => [...current, c_user]);
+    }
+    axios.post(`/post/comment/like/${commentId}`);
+  };
   return (
     <>
-      <div className="border-solid py-2 border-b-[1px] border-gray-700">
-        <div className="flex items-center">
-          <img src={avatar} className="w-10 h-10 rounded-full" />
-          <div className="join join-vertical ml-2">
-            <h4 className="join-item text-sm text-gray-300 mr-2">
-              {name} <Verify verified={verified} />
-            </h4>
-            <h5 className="join-item text-sm text-gray-400">
-              @{username} • {sortAndFormatDate(createdAt)}
-            </h5>
+      <div className="flex border-solid py-2 px-2 border-b-[1px] border-gray-700 items-center justify-between">
+        <div className="">
+          <div className="flex items-center">
+            <img src={avatar} className="w-10 h-10 rounded-full" />
+            <div className="join join-vertical ml-2">
+              <h4 className="join-item text-sm text-gray-300 mr-2">
+                {name} <Verify verified={verified} />
+              </h4>
+              <h5 className="join-item text-sm text-gray-400">
+                @{username} • {sortAndFormatDate(createdAt)}
+              </h5>
+            </div>
           </div>
+          <div className="mt-2">
+            <h4 className="text-gray-300 text-sm">{content}</h4>
+          </div>
+          {/*     
+          <div className="mt-2 flex">
+            <h4 className="text-gray-500 text-sm">70 replies</h4>
+            <h4 className="text-gray-500 mx-2 text-sm">•</h4>
+            <h4 className="text-gray-500 text-sm">Reply</h4>
+          </div> */}
         </div>
-        <div className="mt-2">
-          <h4 className="text-gray-300 text-md">{content}</h4>
+        <div className="flex flex-col justify-center">
+          <button className="" onClick={handleLikeChange}>
+            {TEMP_LIKES_ARRAY?.find((r) => r == Cookie.get("c_user")) ? (
+              <SHeartIcon className="h-4 w-4 text-pink-600" />
+            ) : (
+              <HeartIcon className="h-4 w-4 text-gray-400" />
+            )}
+          </button>
+          <h3 className="flex justify-center text-gray-400 m-0 text-sm">
+            {TEMP_LIKES_ARRAY.length}
+          </h3>
         </div>
       </div>
     </>
@@ -158,7 +207,7 @@ function PostComments({ action, postId }) {
         </div>
         <div className="overflow-scroll h-full pb-4">
           {comments ? (
-            comments.map(({ content, user, createdAt }) => (
+            comments.map(({ content, user, createdAt, id, likes }) => (
               <Comment
                 key={Math.random()}
                 name={user.fullname}
@@ -167,6 +216,8 @@ function PostComments({ action, postId }) {
                 avatar={user.avatar}
                 verified={user.verified}
                 createdAt={createdAt}
+                commentId={id}
+                likes={likes}
               />
             ))
           ) : (

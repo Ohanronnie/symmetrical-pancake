@@ -10,6 +10,8 @@ import { Post } from "./entities/post.entity";
 import { Like } from "./entities/like.entity";
 import { Follower } from "./entities/followers.entity";
 import { Comment } from "./entities/comment.entity";
+import { CommentLike } from "./entities/like-comment.entity";
+import { Notification } from "./entities/notification.entity";
 import { Seen } from "./entities/seen.entity";
 import { ICreateUser, IUpdateUser } from "./interfaces/user.interface";
 import { IPost } from "./interfaces/post.interface";
@@ -26,6 +28,10 @@ export class UserService {
     private readonly commentRepository: Repository<Comment>,
     @InjectRepository(Follower)
     private readonly followerRepository: Repository<Follower>,
+    @InjectRepository(CommentLike)
+    private readonly commentLikeRepository: Repository<CommentLike>,
+    @InjectRepository(Notification)
+    private readonly notificationRepository: Repository<Notification>,
     private readonly jwtService: JwtService,
   ) {}
   async create(details: ICreateUser) {
@@ -70,6 +76,37 @@ export class UserService {
       avatar: post.user.avatar,
       seen: post.seen.length,
     };
+  }
+  async putNotification(user: User, notifier: User, text: string) {
+    const notification = this.notificationRepository.create({
+      text,
+      name: notifier.fullname,
+      image: notifier.avatar,
+      user,
+    });
+    await this.notificationRepository.save(notification);
+    return true;
+  }
+  async notify(
+    type: "like" | "comment" | "follow",
+    user: User,
+    notifier: User,
+  ) {
+    if (user.id === notifier.id) return false;
+    switch (type) {
+      case "like":
+        await this.putNotification(user, notifier, `reacted on your post`);
+        break;
+      case "comment":
+        await this.putNotification(user, notifier, `commented on your post`);
+        break;
+      case "follow":
+        await this.putNotification(user, notifier, `followed you`);
+        break;
+      default:
+        return false;
+    }
+    return true;
   }
   createJwt(email: string, id: number) {
     return this.jwtService.sign({ email, id });
@@ -173,7 +210,7 @@ export class UserService {
       },
       skip: skip,
       take: take,
-      relations: ["user"],
+      relations: ["user", "likes", "likes.user"],
       // loadRelationIds: true
     });
     return comments
@@ -182,6 +219,7 @@ export class UserService {
         id: e.id,
         content: e.content,
         createdAt: e.createdAt,
+        likes: e.likes.map((c) => c.user.id),
         user: {
           fullname: e.user.fullname,
           username: e.user.username,
@@ -192,7 +230,12 @@ export class UserService {
       }));
   }
   async handleLikes(postId: number, userId: number) {
-    const post = await this.postRepository.findOneBy({ id: postId });
+    const post = await this.postRepository.findOne({
+      where: {
+        id: postId,
+      },
+      relations: ["user"],
+    });
     const user = await this.userRepository.findOneBy({ id: userId });
     if (!user || !post) return;
     const likeExist = await this.likeRepository.findOne({
@@ -212,6 +255,7 @@ export class UserService {
         user,
       });
       await this.likeRepository.save(newLike);
+      await this.notify("like", post.user, user);
     } else {
       await this.likeRepository.remove(likeExist);
     }
@@ -244,15 +288,19 @@ export class UserService {
     const user = await this.userRepository.findOneBy({
       id: userId,
     });
-    const post = await this.postRepository.findOneBy({
-      id: postId,
+    const post = await this.postRepository.findOne({
+      where: {
+        id: postId,
+      },
+      relations: ["user"],
     });
     const comment = await this.commentRepository.create({
       user,
       post,
       content,
     });
-    await this.commentRepository.save(comment);
+    const _comment = await this.commentRepository.save(comment);
+    await this.notify("comment", post.user, user);
     return {
       user: {
         id: user.id,
@@ -262,6 +310,7 @@ export class UserService {
         verified: user.verified,
       },
       content,
+      likes: _comment.likes.map((e) => e.id),
     };
   }
   async getPostByUserId(userId: number) {
@@ -298,6 +347,7 @@ export class UserService {
         followers,
       });
       await this.followerRepository.save(done);
+      await this.notify("follow", followers, following);
     } else {
       const __user = await this.followerRepository.findOne({
         where: {
@@ -487,5 +537,40 @@ export class UserService {
       default:
         return await this.searchPost(value, userId);
     }
+  }
+  async handleCommentLikes(commentId: number, userId: number) {
+    const comment = await this.commentRepository.findOneBy({ id: commentId });
+    const user = await this.userRepository.findOneBy({ id: userId });
+    if (!user || !comment) return;
+    const likeExist = await this.commentLikeRepository.findOne({
+      where: {
+        comment: {
+          id: commentId,
+        },
+        user: {
+          id: userId,
+        },
+      },
+      loadRelationIds: true,
+    });
+    if (!likeExist) {
+      const newLike = this.commentLikeRepository.create({
+        comment,
+        user,
+      });
+      await this.commentLikeRepository.save(newLike);
+    } else {
+      await this.commentLikeRepository.remove(likeExist);
+    }
+  }
+  async getNotification(userId: number) {
+    return await this.notificationRepository.find({
+      where: {
+        user: {
+          id: userId,
+        },
+      },
+      loadRelationIds: true,
+    });
   }
 }
