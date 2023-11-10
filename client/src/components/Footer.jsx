@@ -33,7 +33,7 @@ export default function Footer() {
         <UserCircleIcon className="h-5 w-5" />
       </button>
       <button
-        onClick={goTo("/notifications/")}
+        onClick={goTo("/notifications")}
         className={`${
           isActive("/notifications") && "active"
         } text-white bg-gray-900`}
