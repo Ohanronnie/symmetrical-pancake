@@ -311,6 +311,7 @@ export class UserService {
       },
       content,
       likes: [],
+      createdAt: new Date(),
     };
   }
   async getPostByUserId(userId: number) {
